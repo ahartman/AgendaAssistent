@@ -1,0 +1,33 @@
+{
+  "originHash" : "8b4267143f28ed43c01fc3c68f93941f9a2359d0f14313a9e3a4749d1995a52b",
+  "pins" : [
+    {
+      "identity" : "grdb.swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/groue/GRDB.swift.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "04543755d8deeaacf122e2856e4fc056dc304277"
+      }
+    },
+    {
+      "identity" : "multislider",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/yonat/MultiSlider",
+      "state" : {
+        "branch" : "master",
+        "revision" : "58f67812e8180ae245ec959c816af2b388aaeb9a"
+      }
+    },
+    {
+      "identity" : "sweeterswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/yonat/SweeterSwift",
+      "state" : {
+        "revision" : "d324c3ce0d021f8d1f11f10014ad597fad60e36c",
+        "version" : "1.2.5"
+      }
+    }
+  ],
+  "version" : 3
+}
