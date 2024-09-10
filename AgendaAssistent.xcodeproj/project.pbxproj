@@ -11,7 +11,6 @@
 		DCB88F6124D47D7700400853 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCB88F6024D47D7700400853 /* Assets.xcassets */; };
 		DCB88F6424D47D7700400853 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCB88F6324D47D7700400853 /* Preview Assets.xcassets */; };
 		DCB88F6F24D47ECE00400853 /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB88F6E24D47ECE00400853 /* MainModel.swift */; };
-		E802DFF02B5BB348000D1121 /* MultiSlider in Frameworks */ = {isa = PBXBuildFile; productRef = E802DFEF2B5BB348000D1121 /* MultiSlider */; };
 		E80444812BFDF62D00DDA0BC /* ChartlinesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E80444802BFDF62D00DDA0BC /* ChartlinesView.swift */; };
 		E81539A92AA33879002068D8 /* BalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81539A82AA33879002068D8 /* BalanceView.swift */; };
 		E81D6DBA255454D8005CD6BA /* SetDatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81D6DB9255454D8005CD6BA /* SetDatesView.swift */; };
@@ -32,6 +31,7 @@
 		E8A672282B36CA4C008A8897 /* PatientMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A672272B36CA4C008A8897 /* PatientMapView.swift */; };
 		E8ADF96A2A32FD1000D5E3A8 /* AppointmentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8ADF9692A32FD1000D5E3A8 /* AppointmentsView.swift */; };
 		E8B248B32AFFDAF2002BAFF6 /* DBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B248B22AFFDAF2002BAFF6 /* DBModel.swift */; };
+		E8DEECC52C8ED8A100D22C93 /* BetterSlider in Frameworks */ = {isa = PBXBuildFile; productRef = E8DEECC42C8ED8A100D22C93 /* BetterSlider */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -82,8 +82,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8DEECC52C8ED8A100D22C93 /* BetterSlider in Frameworks */,
 				E84DB6AB2AE1293D00820884 /* GRDB in Frameworks */,
-				E802DFF02B5BB348000D1121 /* MultiSlider in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -198,7 +198,7 @@
 			name = AgendaAssistent;
 			packageProductDependencies = (
 				E84DB6AA2AE1293D00820884 /* GRDB */,
-				E802DFEF2B5BB348000D1121 /* MultiSlider */,
+				E8DEECC42C8ED8A100D22C93 /* BetterSlider */,
 			);
 			productName = EventKit.Example;
 			productReference = DCB88F5724D47D7500400853 /* Agenda Assistent.app */;
@@ -232,7 +232,7 @@
 			mainGroup = DCB88F4E24D47D7500400853;
 			packageReferences = (
 				E84DB6A92AE1293D00820884 /* XCRemoteSwiftPackageReference "GRDB.swift" */,
-				E802DFEE2B5BB348000D1121 /* XCRemoteSwiftPackageReference "MultiSlider" */,
+				E8DEECC32C8ED8A100D22C93 /* XCRemoteSwiftPackageReference "BetterSlider" */,
 			);
 			productRefGroup = DCB88F5824D47D7500400853 /* Products */;
 			projectDirPath = "";
@@ -553,14 +553,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		E802DFEE2B5BB348000D1121 /* XCRemoteSwiftPackageReference "MultiSlider" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/yonat/MultiSlider";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
 		E84DB6A92AE1293D00820884 /* XCRemoteSwiftPackageReference "GRDB.swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/groue/GRDB.swift.git";
@@ -569,18 +561,26 @@
 				kind = branch;
 			};
 		};
+		E8DEECC32C8ED8A100D22C93 /* XCRemoteSwiftPackageReference "BetterSlider" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/lukepistrol/BetterSlider.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		E802DFEF2B5BB348000D1121 /* MultiSlider */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E802DFEE2B5BB348000D1121 /* XCRemoteSwiftPackageReference "MultiSlider" */;
-			productName = MultiSlider;
-		};
 		E84DB6AA2AE1293D00820884 /* GRDB */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E84DB6A92AE1293D00820884 /* XCRemoteSwiftPackageReference "GRDB.swift" */;
 			productName = GRDB;
+		};
+		E8DEECC42C8ED8A100D22C93 /* BetterSlider */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E8DEECC32C8ED8A100D22C93 /* XCRemoteSwiftPackageReference "BetterSlider" */;
+			productName = BetterSlider;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

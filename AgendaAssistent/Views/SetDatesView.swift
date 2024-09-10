@@ -21,8 +21,8 @@ struct SetDatesView: View {
                     Text("Standaardinstelling")
                     Spacer()
                     Button("Deze week", action: {
-                        model.period.periodStart = [0]
-                        model.period.periodLength = [1]
+                        model.period.periodStart = 0
+                        model.period.periodLength = 1
                     })
                     Spacer()
                     ButtonView(model: model, label: "+1 Week", weeks: 1)
@@ -71,12 +71,12 @@ struct ButtonView: View {
     var body: some View {
         Button(label, action: {
             if weeks == 1 {
-                model.period.periodStart[0] += CGFloat(weeks)
-                model.period.periodLength[0] = CGFloat(weeks)
+                model.period.periodStart += CGFloat(weeks)
+                model.period.periodLength = CGFloat(weeks)
             } else if weeks > 0 {
-                model.period.periodLength[0] += CGFloat(weeks)
+                model.period.periodLength += CGFloat(weeks)
             } else {
-                model.period.periodStart[0] += CGFloat(weeks)
+                model.period.periodStart += CGFloat(weeks)
             }
         })
         .frame(minWidth: 0, maxWidth: 100)

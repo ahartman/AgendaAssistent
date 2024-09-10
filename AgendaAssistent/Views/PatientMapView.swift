@@ -45,7 +45,7 @@ struct doMap: View {
             ForEach(mapData.circles[...2]) { circle in
                 MapCircle(center: circle.coordinate, radius: circle.radius)
                     .foregroundStyle(.clear)
-                    .stroke(circle.strokeColor, lineWidth: 4)
+                    .stroke(circle.strokeColor, lineWidth: 2)
             }
         }
     }

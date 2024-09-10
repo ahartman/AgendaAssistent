@@ -25,9 +25,9 @@ let tekstGrootte: CGFloat = 16
 
 // Period
 struct Period: Codable {
-    var periodStart = [CGFloat]()
-    var periodLength = [CGFloat]()
-    var periodEnds = [CGFloat]()
+    var periodStart: Double = 0.0
+    var periodLength: Double = 0.0
+    var periodEnds = [Double]()
     var periodDates = PeriodStartEnd()
 
     struct PeriodStartEnd: Codable {

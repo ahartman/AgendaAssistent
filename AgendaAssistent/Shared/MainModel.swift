@@ -31,8 +31,8 @@ import EventKit
     init() {
         let localStart = -4.0
         let localLength = 8.0
-        period.periodStart = [localStart] // in weken
-        period.periodLength = [localLength] // in weken
+        period.periodStart = localStart // in weken
+        period.periodLength = localLength // in weken
         period.periodDates = Period.PeriodStartEnd(
             start: kalender.date(byAdding: DateComponents(day: Int(localStart) * 7 + 1), to: zeroDate)!,
             end: kalender.date(byAdding: DateComponents(day: Int(localLength) * 7), to: zeroDate)!

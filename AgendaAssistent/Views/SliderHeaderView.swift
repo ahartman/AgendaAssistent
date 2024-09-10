@@ -6,6 +6,7 @@
 //  Copyright © 2023 André Hartman. All rights reserved.
 //
 
+import BetterSlider
 import MultiSlider
 import SwiftUI
 
@@ -13,9 +14,6 @@ import SwiftUI
 struct SliderHeaderView: View {
     @Bindable var model: MainModel
     let screenWidth: CGFloat = UIScreen.main.bounds.width - 32.0
-    let labelFormat = Date.FormatStyle()
-        .year(.twoDigits)
-        .month(.abbreviated)
 
     var body: some View {
         VStack {
@@ -29,54 +27,66 @@ struct SliderHeaderView: View {
                 Spacer()
             }
             HStack {
-                Spacer()
-                MultiValueSlider(
-                    value: $model.period.periodStart,
-                    minimumValue: model.period.periodEnds[0],
-                    maximumValue: model.period.periodEnds[1],
-                    isContinuous: false,
-                    snapStepSize: 12,
-                    valueLabelPosition: .top,
-                    orientation: .horizontal,
-                    valueLabelColor: UIColor(kleur)
-                )
-                .snapImage(.init(systemName: "line.diagonal"))
-                .valueLabelTextForThumb { _, value in
-                    "\(kalender.date(byAdding: DateComponents(month: Int(value / 4)), to: Date())!.formatted(labelFormat))"
-                }
-                .padding(.horizontal, 20)
-                .containerRelativeFrame(.horizontal, count: 12, span: 8, spacing: 1)
-                .onChange(of: model.period.periodStart, initial: false) { setPeriod() }
-                Spacer()
-                MultiValueSlider(
-                    value: $model.period.periodLength,
-                    minimumValue: CGFloat(0),
-                    maximumValue: CGFloat(96),
-                    isContinuous: false,
-                    snapStepSize: 4,
-                    valueLabelPosition: .top,
-                    orientation: .horizontal,
-                    valueLabelColor: UIColor(kleur)
-                )
-                .snapImage(.init(systemName: "line.diagonal"))
-                .valueLabelTextForThumb { _, value in
-                    "\(Int(value / 4)) maanden"
-                }
-                .padding(.horizontal, 20)
-                .containerRelativeFrame(.horizontal, count: 12, span: 4, spacing: 1)
-                .onChange(of: model.period.periodLength, initial: false) { setPeriod() }
-                Spacer()
+                let range1 = model.period.periodEnds[0]...model.period.periodEnds[1]
+                let step = 12.0
+                let range2 = 0.0...96.0
+                BetterSlider(value: $model.period.periodStart, in: range1, step: step)
+                    { Text("") } maximumValueLabel: { Text("") }
+                    .containerRelativeFrame(.horizontal, count: 12, span: 8, spacing: 1)
+                    .safeAreaInset(edge: .top) {
+                        Text(formatThumb(value: model.period.periodStart))
+                            .monthStyle(value: model.period.periodStart)
+                     }
+                    .onChange(of: model.period.periodStart, initial: false) { setPeriod() }
+                BetterSlider(value: $model.period.periodLength, in: range2, step: step)
+                    { Text("") } maximumValueLabel: { Text("") }
+                   .containerRelativeFrame(.horizontal, count: 12, span: 4, spacing: 1)
+                    .safeAreaInset(edge: .top) {
+                        Text("\(Int(model.period.periodLength / 4)) maanden")
+                            .monthStyle(value: model.period.periodLength)
+                    }
+                    .onChange(of: model.period.periodLength, initial: false) { setPeriod() }
             }
-            .frame(maxHeight: 80)
+            .showSliderStep()
+            .sliderHandleSize(20)
+            .sliderTrackHeight(10)
+            .sliderStepHeight(25)
+            .sliderTrackColor(.gray)
+            .sliderHandleColor(.red)
+            .tint(.gray)
+            .padding(.horizontal, 20)
         }
     }
 
+    func formatThumb(value: Double) -> String {
+        let labelFormat = Date.FormatStyle()
+            .year(.twoDigits)
+            .month(.abbreviated)
+        return kalender.date(byAdding: DateComponents(month: Int(value / 4)), to: Date())!.formatted(labelFormat)
+    }
+
     func setPeriod() {
-        let tempStart = kalender.date(byAdding: DateComponents(day: Int(model.period.periodStart[0]) * 7), to: model.zeroDate)!
+        let tempStart = kalender.date(byAdding: DateComponents(day: Int(model.period.periodStart) * 7), to: model.zeroDate)!
         model.period.periodDates = Period.PeriodStartEnd(
             start: tempStart,
-            end: kalender.date(byAdding: DateComponents(day: Int(model.period.periodLength[0]) * 7), to: tempStart)!
+            end: kalender.date(byAdding: DateComponents(day: Int(model.period.periodLength) * 7), to: tempStart)!
         )
         model.loadAndUpdate()
+    }
+}
+
+struct MonthStyle: ViewModifier {
+    let value: Double
+    func body(content: Content) -> some View {
+        content
+            .font(.system(size: 16, weight: .semibold, design: .rounded).monospacedDigit())
+            .padding(0)
+            .contentTransition(.numericText(value: value))
+            .animation(.default, value: value)
+    }
+}
+extension View {
+    func monthStyle(value: Double) -> some View {
+        modifier(MonthStyle(value: value))
     }
 }
