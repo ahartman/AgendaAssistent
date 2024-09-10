@@ -27,10 +27,8 @@ struct SliderHeaderView: View {
                 Spacer()
             }
             HStack {
-                let range1 = model.period.periodEnds[0]...model.period.periodEnds[1]
-                let step = 12.0
-                let range2 = 0.0...96.0
-                BetterSlider(value: $model.period.periodStart, in: range1, step: step)
+                let range = model.period.periodEnds[0]...model.period.periodEnds[1]
+                BetterSlider(value: $model.period.periodStart, in: range, step: 12.0)
                     { Text("") } maximumValueLabel: { Text("") }
                     .containerRelativeFrame(.horizontal, count: 12, span: 8, spacing: 1)
                     .safeAreaInset(edge: .top) {
@@ -38,7 +36,7 @@ struct SliderHeaderView: View {
                             .monthStyle(value: model.period.periodStart)
                      }
                     .onChange(of: model.period.periodStart, initial: false) { setPeriod() }
-                BetterSlider(value: $model.period.periodLength, in: range2, step: step)
+                BetterSlider(value: $model.period.periodLength, in: 0.0...96.0, step: 12.0)
                     { Text("") } maximumValueLabel: { Text("") }
                    .containerRelativeFrame(.horizontal, count: 12, span: 4, spacing: 1)
                     .safeAreaInset(edge: .top) {
@@ -49,11 +47,11 @@ struct SliderHeaderView: View {
             }
             .showSliderStep()
             .sliderHandleSize(20)
-            .sliderTrackHeight(10)
+            .sliderTrackHeight(5)
             .sliderStepHeight(25)
-            .sliderTrackColor(.gray)
-            .sliderHandleColor(.red)
-            .tint(.gray)
+            .sliderTrackColor(kleur)
+            .sliderHandleColor(.green)
+            .tint(kleur)
             .padding(.horizontal, 20)
         }
     }
