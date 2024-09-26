@@ -14,7 +14,11 @@ struct SliderHeaderView: View {
     @Bindable var model: MainModel
     let screenWidth: CGFloat = UIScreen.main.bounds.width - 32.0
 
+    let colors: [Color] = [kleur.opacity(transparant), kleur]
+    //var range: ClosedRange<Double> = 0 ... 35
+
     var body: some View {
+        let range = model.period.periodEnds[0]...model.period.periodEnds[1]
         VStack {
             HStack {
                 Spacer()
@@ -26,7 +30,6 @@ struct SliderHeaderView: View {
                 Spacer()
             }
             HStack {
-                let range = model.period.periodEnds[0]...model.period.periodEnds[1]
                 BetterSlider(value: $model.period.periodStart, in: range, step: 12.0)
                     { Text("") } maximumValueLabel: { Text("") }
                     .containerRelativeFrame(.horizontal, count: 12, span: 8, spacing: 1)
@@ -52,6 +55,11 @@ struct SliderHeaderView: View {
             .sliderHandleColor(.green)
             .tint(kleur)
             .padding(.horizontal, 20)
+            /*
+            SliderView(value: $model.period1.periodStart.animation(.bouncy), range: range, stepCount: 35, colors: colors)
+                .onChange(of: model.period1.periodStart, initial: false) { setPeriod1() }
+             */
+
         }
     }
 
@@ -65,6 +73,15 @@ struct SliderHeaderView: View {
     func setPeriod() {
         let tempStart = kalender.date(byAdding: DateComponents(day: Int(model.period.periodStart) * 7), to: model.zeroDate)!
         model.period.periodDates = Period.PeriodStartEnd(
+            start: tempStart,
+            end: kalender.date(byAdding: DateComponents(day: Int(model.period.periodLength) * 7), to: tempStart)!
+        )
+        model.loadAndUpdate()
+    }
+
+    func setPeriod1() {
+        let tempStart = kalender.date(byAdding: DateComponents(day: Int(model.period1.periodStart) * 7), to: model.zeroDate)!
+        model.period1.periodDates = PeriodFloat.PeriodStartEnd(
             start: tempStart,
             end: kalender.date(byAdding: DateComponents(day: Int(model.period.periodLength) * 7), to: tempStart)!
         )

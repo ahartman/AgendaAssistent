@@ -6,6 +6,18 @@
 //
 import EventKit
 
+struct PeriodFloat: Codable {
+    var periodStart: CGFloat = 0.0
+    var periodLength: CGFloat = 0.0
+    var periodEnds = [CGFloat]()
+    var periodDates = PeriodStartEnd()
+
+    struct PeriodStartEnd: Codable {
+        var start = Date()
+        var end = Date()
+    }
+}
+
 @Observable class MainModel {
     var patientAllVisits = [PatientInfo]()
     var patientVisits = [PatientInfo]()
@@ -18,6 +30,8 @@ import EventKit
     var noShowData = [NoShowLine]()
     var period = Period()
     var eersteDisabled: Bool = true
+
+    var period1 = PeriodFloat()
 
     let zeroDate = kalender.nextDate(
         after: Date(),
@@ -37,6 +51,14 @@ import EventKit
             start: kalender.date(byAdding: DateComponents(day: Int(localStart) * 7 + 1), to: zeroDate)!,
             end: kalender.date(byAdding: DateComponents(day: Int(localLength) * 7), to: zeroDate)!
         )
+
+        period1.periodStart = localStart // in weken
+        period1.periodLength = localLength // in weken
+        period1.periodDates = PeriodFloat.PeriodStartEnd(
+            start: kalender.date(byAdding: DateComponents(day: Int(localStart) * 7 + 1), to: zeroDate)!,
+            end: kalender.date(byAdding: DateComponents(day: Int(localLength) * 7), to: zeroDate)!
+        )
+
         if defaults.object(forKey: "todayDaily") == nil {
             defaults.set(Date(), forKey: "todayDaily")
         }

@@ -126,7 +126,7 @@ struct MeshingSlider: View {
 
     var body: some View {
         HStack(alignment: .center) {
-            SliderView(value: self.$value.animation(.bouncy), range: self.range, stepCount: 35, colors: self.colors)
+            SliderView(value: $value.animation(.bouncy), range: range, stepCount: 35, colors: colors)
         }
     }
 }

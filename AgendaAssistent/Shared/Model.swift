@@ -6,7 +6,7 @@
 //
 
 import EventKit
-import GRDB
+@preconcurrency import GRDB
 import MapKit
 import SwiftUI
 
