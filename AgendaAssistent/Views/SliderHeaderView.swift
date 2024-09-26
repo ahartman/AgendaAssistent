@@ -7,7 +7,6 @@
 //
 
 import BetterSlider
-import MultiSlider
 import SwiftUI
 
 @MainActor

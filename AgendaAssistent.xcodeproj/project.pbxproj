@@ -25,6 +25,7 @@
 		E8869B2525540EE50039232E /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8869B2425540EE50039232E /* Model.swift */; };
 		E888164F25B6BF9A00E33FB7 /* AgendaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E888164E25B6BF9A00E33FB7 /* AgendaApp.swift */; };
 		E88AD0022C11BEA8002F1866 /* ChartModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88AD0012C11BEA8002F1866 /* ChartModel.swift */; };
+		E88F8CFE2CA53B0D007223EF /* SliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88F8CFD2CA53B0D007223EF /* SliderView.swift */; };
 		E8922FAE27B8F8BD00D83275 /* CommandsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8922FAD27B8F8BD00D83275 /* CommandsView.swift */; };
 		E898FEF72B8F1ECA00B188D0 /* PatientTimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E898FEF62B8F1ECA00B188D0 /* PatientTimelineView.swift */; };
 		E89BFB6B2B78BDA500CFBADC /* NoShowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89BFB6A2B78BDA500CFBADC /* NoShowView.swift */; };
@@ -68,6 +69,7 @@
 		E8869B2425540EE50039232E /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		E888164E25B6BF9A00E33FB7 /* AgendaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaApp.swift; sourceTree = "<group>"; };
 		E88AD0012C11BEA8002F1866 /* ChartModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartModel.swift; sourceTree = "<group>"; };
+		E88F8CFD2CA53B0D007223EF /* SliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderView.swift; sourceTree = "<group>"; };
 		E89007AD2580FAA3007BB749 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		E8922FAD27B8F8BD00D83275 /* CommandsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandsView.swift; sourceTree = "<group>"; };
 		E898FEF62B8F1ECA00B188D0 /* PatientTimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientTimelineView.swift; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 				E898FEF62B8F1ECA00B188D0 /* PatientTimelineView.swift */,
 				E81D6DB9255454D8005CD6BA /* SetDatesView.swift */,
 				E8800E5C2B34375E00EDC4AE /* SliderHeaderView.swift */,
+				E88F8CFD2CA53B0D007223EF /* SliderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -273,6 +276,7 @@
 				E82670C725AED1E300298BD0 /* MapModel.swift in Sources */,
 				E8B248B32AFFDAF2002BAFF6 /* DBModel.swift in Sources */,
 				E8ADF96A2A32FD1000D5E3A8 /* AppointmentsView.swift in Sources */,
+				E88F8CFE2CA53B0D007223EF /* SliderView.swift in Sources */,
 				E88103C22B46B91F004923DA /* EventModel.swift in Sources */,
 				DCB88F6F24D47ECE00400853 /* MainModel.swift in Sources */,
 				DCB88F5F24D47D7500400853 /* ContentViewTabbar.swift in Sources */,
