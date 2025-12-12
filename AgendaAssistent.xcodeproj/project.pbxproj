@@ -12,7 +12,6 @@
 		DCB88F6424D47D7700400853 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCB88F6324D47D7700400853 /* Preview Assets.xcassets */; };
 		DCB88F6F24D47ECE00400853 /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB88F6E24D47ECE00400853 /* MainModel.swift */; };
 		E80444812BFDF62D00DDA0BC /* ChartlinesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E80444802BFDF62D00DDA0BC /* ChartlinesView.swift */; };
-		E81539A92AA33879002068D8 /* BalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81539A82AA33879002068D8 /* BalanceView.swift */; };
 		E81D6DBA255454D8005CD6BA /* SetDatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81D6DB9255454D8005CD6BA /* SetDatesView.swift */; };
 		E82436AD2B2311AD00618B45 /* DiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82436AC2B2311AD00618B45 /* DiaryView.swift */; };
 		E82670C725AED1E300298BD0 /* MapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82670C625AED1E300298BD0 /* MapModel.swift */; };
@@ -56,7 +55,6 @@
 		DCB88F6824D47D7700400853 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DCB88F6E24D47ECE00400853 /* MainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModel.swift; sourceTree = "<group>"; };
 		E80444802BFDF62D00DDA0BC /* ChartlinesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartlinesView.swift; sourceTree = "<group>"; };
-		E81539A82AA33879002068D8 /* BalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceView.swift; sourceTree = "<group>"; };
 		E81C4993257759D5002A67D9 /* Agenda Assistent.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Agenda Assistent.entitlements"; sourceTree = "<group>"; };
 		E81D6DB9255454D8005CD6BA /* SetDatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetDatesView.swift; sourceTree = "<group>"; };
 		E82436AC2B2311AD00618B45 /* DiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryView.swift; sourceTree = "<group>"; };
@@ -136,7 +134,6 @@
 			isa = PBXGroup;
 			children = (
 				E8ADF9692A32FD1000D5E3A8 /* AppointmentsView.swift */,
-				E81539A82AA33879002068D8 /* BalanceView.swift */,
 				E80444802BFDF62D00DDA0BC /* ChartlinesView.swift */,
 				E8922FAD27B8F8BD00D83275 /* CommandsView.swift */,
 				E82436AC2B2311AD00618B45 /* DiaryView.swift */,
@@ -284,7 +281,6 @@
 				E81D6DBA255454D8005CD6BA /* SetDatesView.swift in Sources */,
 				E8A672282B36CA4C008A8897 /* PatientMapView.swift in Sources */,
 				E86A68422B2C5CAE00C48A63 /* ContactModel.swift in Sources */,
-				E81539A92AA33879002068D8 /* BalanceView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

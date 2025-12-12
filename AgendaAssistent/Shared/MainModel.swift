@@ -99,7 +99,6 @@ struct PeriodFloat: Codable {
         patientVisits = DBModel().getPatientInfo(dates: period.periodDates)
 
         doChartLines()
-        doInOutFlowLines()
         doDiary()
         doNoShowLines()
         doMapView()
@@ -320,69 +319,6 @@ struct PeriodFloat: Codable {
         }
         chartsData.chartData = chartsData.chartData
             .filter { selectedToggles.contains($0.type) }
-    }
-
-    // balanceView
-    func doInOutFlowLines() {
-        var localLines = [FlowLine]()
-        let allEvents = patientAllVisits.flatMap { $0.visits }
-
-        func doWeek(datum: Date) -> String {
-            let components = kalender.dateComponents([.weekOfYear, .yearForWeekOfYear], from: datum)
-            return String(format: "%02D", components.weekOfYear!) + String(components.yearForWeekOfYear!)
-        }
-
-        let visits = allEvents
-            .filter { !$0.visitCalendar.contains("speciallekes") }
-        let newVisits = allEvents
-            .filter { $0.visitFirst && $0.visitCalendar == "Marieke nieuwe" }
-        let proposedVisits = allEvents
-            .filter { $0.visitFirst && $0.visitCalendar == "Marieke speciallekes" }
-        let noShowVisits = patientAllVisits
-            .flatMap { $0.visits }
-            .filter { $0.visitCalendar == "Marieke speciallekes" && ($0.visitCanceled || $0.visitNoShow) }
-        let endedVisits = patientAllVisits
-            .map { $0.visits.last! }
-
-        var datum = period.periodDates.start
-        let currentWeek = doWeek(datum: Date())
-        while datum < period.periodDates.end {
-            let datumWeek = doWeek(datum: datum)
-            let weekAllCount = visits.filter {
-                datumWeek == doWeek(datum: $0.visitDate)
-            }.count
-            let weekNoShowCount = noShowVisits.filter {
-                datumWeek == doWeek(datum: $0.visitDate)
-            }.count
-            let weekNewCount = newVisits.filter {
-                datumWeek == doWeek(datum: $0.visitDate)
-            }.count
-            let weekProposalsCount = proposedVisits.filter {
-                datumWeek == doWeek(datum: $0.visitDate)
-            }.count
-            let weekEndedCount = endedVisits.filter {
-                datumWeek < currentWeek && datumWeek == doWeek(datum: $0.visitDate)
-            }.count
-
-            let saldo = weekNewCount - weekEndedCount + weekProposalsCount
-
-            localLines.append(
-                FlowLine(
-                    startDate: datum,
-                    weekNumber: kalender.component(.weekOfYear, from: datum),
-                    consultaties: weekAllCount + weekNoShowCount,
-                    nietGekomen: weekNoShowCount,
-                    geenVervolg: weekEndedCount,
-                    nieuwe: weekNewCount,
-                    voorstellen: weekProposalsCount,
-                    saldo: saldo
-                )
-            )
-            datum = kalender.date(byAdding: DateComponents(day: 7), to: datum)!
-        }
-
-        inOutData = localLines
-        if debugPrint { print("end doBalancesLines") }
     }
 
     // patientsTimeline

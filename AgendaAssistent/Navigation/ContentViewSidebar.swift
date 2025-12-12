@@ -31,9 +31,6 @@ struct ContentViewSidebar: View {
                 NavigationLink(destination: NoShowview(title: "Niet gekomen")) {
                     Text("Niet gekomen")
                 }
-                NavigationLink(destination: BalanceView(title: "In- en uitstroom")) {
-                    Text("In- en uitstroom per week")
-                }
                 Divider()
                 NavigationLink(destination: ChartlinesView(chartNumber: 3)) {
                     Text("Ouderdom consultaties")
