@@ -30,6 +30,7 @@ class MapModel {
         for patient in patients {
             let patientLocation = CLLocation(latitude: patient.patientLatitude!, longitude: patient.patientLongitude!)
             let patientLocationDistance = patientLocation.distance(from: rodewegDistance)
+
             let mapCircle = mapCircles.first(where: { patientLocationDistance < $0.radius })
             let monogram = String(patient.patientName
                 .components(separatedBy: " ")

@@ -165,7 +165,6 @@ struct PeriodFloat: Codable {
 
     func doGeo() async {
         let contacts = ContactModel().getContacts()
-
         var patientsNoGeo = DBModel().getNoGeoPatients()
         print("noGeo patients to Contacts: ", patientsNoGeo.count)
         ContactModel().updatePatientsFromContacts(
@@ -218,7 +217,6 @@ struct PeriodFloat: Codable {
                 continueFlag = false
             }
         }
-
         events = Array(Set(foundEvents))
 
         for (index, _) in Array(events.enumerated()) {
@@ -635,6 +633,7 @@ struct PeriodFloat: Codable {
         diaryData = localPatients
     }
 
+#if targetEnvironment(macCatalyst)
     func writeCSV() {
         var patients = [(naam: String, datum: Date)]()
         for line in patientVisits {
@@ -723,4 +722,5 @@ struct PeriodFloat: Codable {
             }
         }
     }
+#endif // targetEnvironment(macCatalyst)
 }

@@ -15,7 +15,8 @@ class DBModel {
         do {
             let fm = FileManager.default
             let path = try fm.url(for: .documentDirectory, in: .allDomainsMask, appropriateFor: nil, create: false)
-            let databaseURL = path.appendingPathComponent("db.sqlite")
+            //let databaseURL = path.appendingPathComponent("db.sqlite")
+            let databaseURL = path.appendingPathComponent("agendaAssistent.sqlite")
             var dbQueue = try DatabaseQueue(path: databaseURL.path)
             print("db stored at \(databaseURL.path)")
             var config = Configuration()
@@ -132,7 +133,8 @@ class DBModel {
     func deleteAllPatients() {
         do {
             try db.write { db in
-                try PatientInfo.Patient.deleteAll(db)
+                let count = try PatientInfo.Patient.deleteAll(db)
+                print("\(count) patients deleted from DB")
             }
         } catch {
             fatalError("Unresolved error \(error)")

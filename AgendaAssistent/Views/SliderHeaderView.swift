@@ -13,9 +13,7 @@ import SwiftUI
 struct SliderHeaderView: View {
     @Bindable var model: MainModel
     let screenWidth: CGFloat = UIScreen.main.bounds.width - 32.0
-
     let colors: [Color] = [kleur.opacity(transparant), kleur]
-    //var range: ClosedRange<Double> = 0 ... 35
 
     var body: some View {
         let range = model.period.periodEnds[0]...model.period.periodEnds[1]
@@ -47,10 +45,11 @@ struct SliderHeaderView: View {
                     }
                     .onChange(of: model.period.periodLength, initial: false) { setPeriod() }
             }
+            .glassEffect()
             .showSliderStep()
             .sliderHandleSize(20)
-            .sliderTrackHeight(5)
-            .sliderStepHeight(25)
+            .sliderTrackHeight(3)
+            .sliderStepHeight(15)
             .sliderTrackColor(kleur)
             .sliderHandleColor(.green)
             .tint(kleur)

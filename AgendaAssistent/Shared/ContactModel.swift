@@ -47,7 +47,9 @@ class ContactModel {
         patientsNoGeo: [PatientInfo.Patient],
         contacts: [CNContact]
     ) async {
-        var waiting = false
+        //var waiting = false
+        let formatter = CNPostalAddressFormatter()
+        var mapitem: MKMapItem?
 
         var patients = patientsNoGeo
         while patients.count > 0 {
@@ -58,30 +60,42 @@ class ContactModel {
                         && patient.patientName.localizedStandardContains(
                             $0.familyName
                         )
-
                 })
-                if let geoContact = contact {
-                    if let postalAddress = geoContact.postalAddresses.first {
+                if patient.patientName.contains("Cedric") {
+                    print(patient)
+                    let _ = 1
+                }
+                if let geoContact = contact,
+                    let postalAddress = geoContact.postalAddresses.first
+                {
+                    print("Finding: \(patient.patientName)")
+                    let addressString = formatter.string(
+                        from: postalAddress.value
+                    )
+                    if let request = MKGeocodingRequest(
+                        addressString: addressString
+                    ) {
                         do {
-                            print("Finding: \(patient.patientName)")
-                            let placemarks = try await CLGeocoder()
-                                .geocodePostalAddress(postalAddress.value)
-                            if let location = placemarks.first?.location {
+                            let mapitems = try await request.mapItems
+                            if let mapitem = mapitems.first {
+                                let location = mapitem.location
                                 print(
-                                    "Found: \(patient.patientName), \(location.coordinate.latitude), \(location.coordinate.longitude)"
+                                    "Found: \(patient.patientName), \(location.coordinate.latitude), \(location.coordinate.longitude) !"
                                 )
-                                waiting = true
                                 let tempPatient = [
                                     PatientInfo.Patient(
                                         id: patient.id,
                                         patientName: patient.patientName,
                                         patientLatitude: location.coordinate
                                             .latitude,
-                                        patientLongitude: location.coordinate
+                                        patientLongitude: location
+                                            .coordinate
                                             .longitude
                                     )
                                 ]
-                                DBModel().updateDBWithGeo(patients: tempPatient)
+                                DBModel().updateDBWithGeo(
+                                    patients: tempPatient
+                                )
 
                                 let tempContact = [
                                     [
@@ -94,24 +108,12 @@ class ContactModel {
                                     geoFound: tempContact
                                 )
                             }
-                        } catch {
-                            if debugPrint {
-                                print(
-                                    "CLGeocoder fout (adres niet gevonden): \(error), \(postalAddress)"
-                                )
-                            }
+                        } catch let error {
+                            print("error: \(error)")
                         }
                     }
                 }
             }
-            if waiting {
-                do {
-                    try await Task.sleep(for: .seconds(30))
-                } catch {
-                    fatalError("getNoGeoPatients: \(error)")
-                }
-            }
-            waiting = false
             patients = Array(patients.dropFirst(to + 1))
         }
     }
