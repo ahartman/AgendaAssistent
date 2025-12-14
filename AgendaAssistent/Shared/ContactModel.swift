@@ -47,74 +47,66 @@ class ContactModel {
         patientsNoGeo: [PatientInfo.Patient],
         contacts: [CNContact]
     ) async {
-        //var waiting = false
         let formatter = CNPostalAddressFormatter()
-        var mapitem: MKMapItem?
-
-        var patients = patientsNoGeo
-        while patients.count > 0 {
-            let to = min(44, patients.count - 1)
-            for patient in Array(patients[...to]) {
-                let contact = contacts.first(where: {
-                    patient.patientName.localizedStandardContains($0.givenName)
-                        && patient.patientName.localizedStandardContains(
-                            $0.familyName
-                        )
-                })
-                if patient.patientName.contains("Cedric") {
-                    print(patient)
-                    let _ = 1
-                }
-                if let geoContact = contact,
-                    let postalAddress = geoContact.postalAddresses.first
-                {
-                    print("Finding: \(patient.patientName)")
-                    let addressString = formatter.string(
-                        from: postalAddress.value
+        for patient in patientsNoGeo {
+            let contact = contacts.first(where: {
+                patient.patientName.localizedStandardContains($0.givenName)
+                    && patient.patientName.localizedStandardContains(
+                        $0.familyName
                     )
-                    if let request = MKGeocodingRequest(
-                        addressString: addressString
-                    ) {
-                        do {
-                            let mapitems = try await request.mapItems
-                            if let mapitem = mapitems.first {
-                                let location = mapitem.location
-                                print(
-                                    "Found: \(patient.patientName), \(location.coordinate.latitude), \(location.coordinate.longitude) !"
+            })
+            if patient.patientName.contains("Cedric") {
+                print(patient)
+                let _ = 1
+            }
+            if let geoContact = contact,
+                let postalAddress = geoContact.postalAddresses.first
+            {
+                print("Handling: \(patient.patientName)")
+                let addressString = formatter.string(
+                    from: postalAddress.value
+                )
+                if let request = MKGeocodingRequest(
+                    addressString: addressString
+                ) {
+                    do {
+                        let mapitems = try await request.mapItems
+                        if let mapitem = mapitems.first {
+                            print(
+                                "Found: \(patient.patientName), \(mapitem.location.coordinate.latitude), \(mapitem.location.coordinate.longitude) !"
+                            )
+                            let tempPatient = [
+                                PatientInfo.Patient(
+                                    id: patient.id,
+                                    patientName: patient.patientName,
+                                    patientLatitude: mapitem.location
+                                        .coordinate
+                                        .latitude,
+                                    patientLongitude: mapitem.location
+                                        .coordinate
+                                        .longitude
                                 )
-                                let tempPatient = [
-                                    PatientInfo.Patient(
-                                        id: patient.id,
-                                        patientName: patient.patientName,
-                                        patientLatitude: location.coordinate
-                                            .latitude,
-                                        patientLongitude: location
-                                            .coordinate
-                                            .longitude
-                                    )
-                                ]
-                                DBModel().updateDBWithGeo(
-                                    patients: tempPatient
-                                )
+                            ]
+                            DBModel().updateDBWithGeo(
+                                patients: tempPatient
+                            )
 
-                                let tempContact = [
-                                    [
-                                        geoContact.identifier,
-                                        "\(location.coordinate.latitude):\(location.coordinate.longitude)",
-                                    ]
+                            let tempContact = [
+                                [
+                                    geoContact.identifier,
+                                    "\(mapitem.location.coordinate.latitude):\(mapitem.location.coordinate.longitude)",
                                 ]
-                                saveGeocodes(
-                                    contacts: contacts,
-                                    geoFound: tempContact
-                                )
-                            }
-                        } catch let error {
-                            print("error: \(error)")
+                            ]
+                            saveGeocodes(
+                                contacts: contacts,
+                                geoFound: tempContact
+                            )
                         }
+                    } catch let error {
+                        print("error: \(error)")
                     }
                 }
             }
-            patients = Array(patients.dropFirst(to + 1))
         }
     }
 
