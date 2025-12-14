@@ -649,7 +649,7 @@ struct PeriodFloat: Codable {
         df.dateFormat = "dd/MM/yy HH:mm"
 
         var csvString =
-            "\("Datum");\("Naam");\("Payconic");\("Bank/mobiel");\("Cash");\("Overschrijven")\n"
+            "\("Datum");\("Naam");\("Payconic");\("Bank/mobiel");\("Cash");\("???")\n"
         for patient in patients {
             let weekday = kalender.component(.weekday, from: patient.datum)
             if weekday != previousWeekday {
@@ -691,6 +691,9 @@ struct PeriodFloat: Codable {
                         set theRange to range ("A1:F" & (count of theList))
                         set font size of font object of theRange to 14
                         set value of theRange to theList
+             
+                        set theRange to range ("C1:F1")
+                        set horizontal alignment of theRange to horizontal align center
 
                         set theRange to range ("C2:F" & (count of theList))
                         set myBorders to {border top, border bottom, border left, border right}
@@ -702,9 +705,9 @@ struct PeriodFloat: Codable {
                         autofit column "A:E"
                     end tell
 
-                    set naam to "/Users/gebruiker/Desktop/Weekformulier.xls"
-                    tell application "System Events" to if (exists file naam) then delete file naam
-                    save workbook as filename naam file format Excel98to2004 file format
+                    --set naam to "/Users/gebruiker/Desktop/Weekformulier.xls"
+                    --tell application "System Events" to if (exists file naam) then delete file naam
+                    --save workbook as filename naam file format Excel98to2004 file format
                 end tell
             end tell
             """
