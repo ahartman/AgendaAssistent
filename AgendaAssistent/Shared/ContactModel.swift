@@ -55,10 +55,7 @@ class ContactModel {
                         $0.familyName
                     )
             })
-            if patient.patientName.contains("Cedric") {
-                print(patient)
-                let _ = 1
-            }
+
             if let geoContact = contact,
                 let postalAddress = geoContact.postalAddresses.first
             {
@@ -103,7 +100,7 @@ class ContactModel {
                             )
                         }
                     } catch let error {
-                        print("error: \(error)")
+                        print("Geocoding issue: \(error)")
                     }
                 }
             }
