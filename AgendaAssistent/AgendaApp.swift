@@ -18,19 +18,6 @@ struct AgendaApp: App {
         WindowGroup("Agenda Assistent") {
             ContentView()
                 .environment(model)
-                .navigationTitle("Agenda Assistent")
         }
-        #if os(macOS)
-            MenuBarExtra("Inspect", systemImage: "eyedropper") {
-                VStack {
-                    Button("Action One") {
-                        // ...
-                    }
-                    Button("Action Two") {
-                        // ...
-                    }
-                }
-            }
-        #endif
     }
 }

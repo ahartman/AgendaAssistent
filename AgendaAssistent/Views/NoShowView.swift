@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct NoShowview: View {
+struct NoShowView: View {
     @Environment(MainModel.self) private var model
     var title: String
 

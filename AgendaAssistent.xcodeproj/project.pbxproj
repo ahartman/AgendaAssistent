@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DCB88F5F24D47D7500400853 /* ContentViewTabbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB88F5E24D47D7500400853 /* ContentViewTabbar.swift */; };
 		DCB88F6124D47D7700400853 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCB88F6024D47D7700400853 /* Assets.xcassets */; };
 		DCB88F6424D47D7700400853 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCB88F6324D47D7700400853 /* Preview Assets.xcassets */; };
 		DCB88F6F24D47ECE00400853 /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB88F6E24D47ECE00400853 /* MainModel.swift */; };
@@ -15,7 +14,6 @@
 		E81D6DBA255454D8005CD6BA /* SetDatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81D6DB9255454D8005CD6BA /* SetDatesView.swift */; };
 		E82436AD2B2311AD00618B45 /* DiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82436AC2B2311AD00618B45 /* DiaryView.swift */; };
 		E82670C725AED1E300298BD0 /* MapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82670C625AED1E300298BD0 /* MapModel.swift */; };
-		E841192C256D258B0051EBFD /* ContentViewSidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E841192B256D258B0051EBFD /* ContentViewSidebar.swift */; };
 		E8411930256D276A0051EBFD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E841192F256D276A0051EBFD /* ContentView.swift */; };
 		E84DB6AB2AE1293D00820884 /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = E84DB6AA2AE1293D00820884 /* GRDB */; };
 		E86A68422B2C5CAE00C48A63 /* ContactModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86A68412B2C5CAE00C48A63 /* ContactModel.swift */; };
@@ -48,7 +46,6 @@
 
 /* Begin PBXFileReference section */
 		DCB88F5724D47D7500400853 /* Agenda Assistent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Agenda Assistent.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		DCB88F5E24D47D7500400853 /* ContentViewTabbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewTabbar.swift; sourceTree = "<group>"; };
 		DCB88F6024D47D7700400853 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DCB88F6324D47D7700400853 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		DCB88F6824D47D7700400853 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -58,7 +55,6 @@
 		E81D6DB9255454D8005CD6BA /* SetDatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetDatesView.swift; sourceTree = "<group>"; };
 		E82436AC2B2311AD00618B45 /* DiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryView.swift; sourceTree = "<group>"; };
 		E82670C625AED1E300298BD0 /* MapModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapModel.swift; sourceTree = "<group>"; };
-		E841192B256D258B0051EBFD /* ContentViewSidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewSidebar.swift; sourceTree = "<group>"; };
 		E841192F256D276A0051EBFD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E86A68412B2C5CAE00C48A63 /* ContactModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactModel.swift; sourceTree = "<group>"; };
 		E8800E5C2B34375E00EDC4AE /* SliderHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderHeaderView.swift; sourceTree = "<group>"; };
@@ -109,7 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				E888164E25B6BF9A00E33FB7 /* AgendaApp.swift */,
-				E8C8B6DE256D292300034E80 /* Navigation */,
+				E841192F256D276A0051EBFD /* ContentView.swift */,
 				DCB88F7224D5831400400853 /* Views */,
 				E8FBAF9725B6C99700C35AA9 /* Shared */,
 				DCB88F6024D47D7700400853 /* Assets.xcassets */,
@@ -150,16 +146,6 @@
 				E89007AD2580FAA3007BB749 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		E8C8B6DE256D292300034E80 /* Navigation */ = {
-			isa = PBXGroup;
-			children = (
-				E841192F256D276A0051EBFD /* ContentView.swift */,
-				DCB88F5E24D47D7500400853 /* ContentViewTabbar.swift */,
-				E841192B256D258B0051EBFD /* ContentViewSidebar.swift */,
-			);
-			path = Navigation;
 			sourceTree = "<group>";
 		};
 		E8FBAF9725B6C99700C35AA9 /* Shared */ = {
@@ -209,7 +195,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1220;
-				LastUpgradeCheck = 1600;
+				LastUpgradeCheck = 2620;
 				ORGANIZATIONNAME = "André Hartman";
 				TargetAttributes = {
 					DCB88F5624D47D7500400853 = {
@@ -257,7 +243,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E841192C256D258B0051EBFD /* ContentViewSidebar.swift in Sources */,
 				E8869B2525540EE50039232E /* Model.swift in Sources */,
 				E888164F25B6BF9A00E33FB7 /* AgendaApp.swift in Sources */,
 				E8411930256D276A0051EBFD /* ContentView.swift in Sources */,
@@ -272,7 +257,6 @@
 				E8ADF96A2A32FD1000D5E3A8 /* AppointmentsView.swift in Sources */,
 				E88103C22B46B91F004923DA /* EventModel.swift in Sources */,
 				DCB88F6F24D47ECE00400853 /* MainModel.swift in Sources */,
-				DCB88F5F24D47D7500400853 /* ContentViewTabbar.swift in Sources */,
 				E8922FAE27B8F8BD00D83275 /* CommandsView.swift in Sources */,
 				E81D6DBA255454D8005CD6BA /* SetDatesView.swift in Sources */,
 				E8A672282B36CA4C008A8897 /* PatientMapView.swift in Sources */,
@@ -319,6 +303,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = V2LV7426WZ;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -341,6 +326,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_STRICT_CONCURRENCY = complete;
@@ -397,6 +383,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = V2LV7426WZ;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -414,6 +401,8 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_UPCOMING_FEATURE_CONCISE_MAGIC_FILE = YES;
@@ -438,12 +427,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				AUTOMATION_APPLE_EVENTS = YES;
 				CODE_SIGN_ENTITLEMENTS = "AgendaAssistent/Agenda Assistent.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"AgendaAssistent/Preview Content\"";
-				DEVELOPMENT_TEAM = V2LV7426WZ;
+				ENABLE_APP_SANDBOX = YES;
 				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = AgendaAssistent/Info.plist;
@@ -460,7 +450,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_UPCOMING_FEATURE_CONCISE_MAGIC_FILE = YES;
 				SWIFT_UPCOMING_FEATURE_DEPRECATE_APPLICATION_MAIN = YES;
@@ -484,12 +474,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				AUTOMATION_APPLE_EVENTS = YES;
 				CODE_SIGN_ENTITLEMENTS = "AgendaAssistent/Agenda Assistent.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"AgendaAssistent/Preview Content\"";
-				DEVELOPMENT_TEAM = V2LV7426WZ;
+				ENABLE_APP_SANDBOX = YES;
 				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = AgendaAssistent/Info.plist;
@@ -506,7 +497,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_UPCOMING_FEATURE_CONCISE_MAGIC_FILE = YES;
 				SWIFT_UPCOMING_FEATURE_DEPRECATE_APPLICATION_MAIN = YES;

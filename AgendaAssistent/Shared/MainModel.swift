@@ -218,6 +218,7 @@ struct PeriodFloat: Codable {
             }
         }
         events = Array(Set(foundEvents))
+        if events.count == 0 { print("Geen agenda's")}
 
         for (index, _) in Array(events.enumerated()) {
             events[index].url = URL(
