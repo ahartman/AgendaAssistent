@@ -13,20 +13,31 @@ struct ContentView: View {
     var body: some View {
         TabView {
             TabSection("Overzichten") {
+                Tab("Hallo", systemImage: "") {
+                    TablesView()
+                }
+                .defaultVisibility(.hidden, for: .sidebar)
                 Tab("Tijdslijn consultaties", systemImage: "") {
                     AppointmentsView(title: "Consultaties tijdslijn")
                 }
+                .defaultVisibility(.hidden, for: .tabBar)
                 Tab("Tijdslijn patiënten", systemImage: "") {
                     PatientTimelineView(title: "Patiënten tijdslijn")
                 }
+                .defaultVisibility(.hidden, for: .tabBar)
                 Tab("Niet gekomen", systemImage: "") {
                     NoShowView(title: "Niet gekomen")
                 }
                 Tab("Agenda", systemImage: "") {
                     DiaryView(title: "Agenda")
                 }
+                .defaultVisibility(.hidden, for: .tabBar)
             }
             TabSection("Grafieken") {
+                Tab("", systemImage: "") {
+                    GraphsView()
+                }
+                .defaultVisibility(.hidden, for: .sidebar)
                 Tab("Ouderdom consultaties", systemImage: "") {
                     ChartlinesView(chartNumber: 3)
                 }
@@ -37,14 +48,14 @@ struct ContentView: View {
                     ChartlinesView(chartNumber: 2)
                 }
             }
+            Tab("Opdrachten", systemImage: "text.and.command.macwindow") {
+                CommandsView(title: "Opdrachten")
+            }
             Tab("Periode instellen", systemImage: "calendar") {
                 SetDatesView(model: model, title: "Periode instellen")
             }
             Tab("Kaart", systemImage: "map") {
                 PatientMapView(title: "Kaart")
-            }
-            Tab("Opdrachten", systemImage: "text.and.command.macwindow") {
-                CommandsView(title: "Opdrachten")
             }
         }
         .tabViewStyle(.sidebarAdaptable)

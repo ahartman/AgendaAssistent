@@ -86,9 +86,6 @@ struct ChartlinesView: View {
         .onChange(of: chartNumber, initial: true) {
             model.doChartLines(chartNr: chartNumber)
         }
-#if os(iOS)
-        .navigationBarTitle(title, displayMode: .inline)
-#endif
     }
 
     func highlightLines(lines: [AveragesChart.ChartLine]) -> [AveragesChart.ChartLine] {

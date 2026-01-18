@@ -13,72 +13,150 @@ struct AppointmentsView: View {
     @Environment(MainModel.self) private var model
     var title: String
 
+    @State var sortDirection = "up"
+    @State var sortType = "alfa"
+
+    struct ButtonImage {
+        var graph: String
+        var buttonIcon: Image
+        var brightness: Double
+
+        struct ButtonIcon {
+            var systemName: String
+            var brightness: Double
+        }
+    }
+    /*
+        @State var buttonImages : [ButtonImage] = [
+            ButtonImage(graph: "alfa", buttonIcon: ButtonImage.ButtonIcon(systemName: "", brightness: 1.0)),
+            ButtonImage(graph: "duur", buttonIcon: ButtonImage.ButtonIcon(systemName: "", brightness: 1.0)),
+            ButtonImage(graph: "aantal", buttonIcon: ButtonImage.ButtonIcon(systemName: "", brightness: 1.0))
+        ]
+    */
+    @State var buttonImages: [ButtonImage] = [
+        ButtonImage(
+            graph: "alfa",
+            buttonIcon: Image(systemName: "arrow.down"),
+            brightness: 0.2
+        ),
+        ButtonImage(
+            graph: "duur",
+            buttonIcon: Image(systemName: ""),
+            brightness: 0.5
+        ),
+        ButtonImage(
+            graph: "aantal",
+            buttonIcon: Image(systemName: ""),
+            brightness: 0.5
+        ),
+    ]
+
+    @State var ikoon = Image(systemName: "arrow.up")
+
     var body: some View {
-        let (xWeekNummers, xAantallen) = xWaarden()
-        SliderHeaderView(model: model)
-        AppointmentsViewHeader(model: model)
-        let localPatients = extraVisits(patients: model.patientVisits)
-        Chart {
-            ForEach(localPatients, id: \.id) { patient in
-                ForEach(patient.visits, id: \.id) { visit in
-                    BarMark(
-                        xStart: .value("Afspraak", visit.visitCreated),
-                        xEnd: .value("Consultatie", visit.visitDate),
-                        y: .value("Naam", doNaam(localPatient: patient))
-                    )
-                    .foregroundStyle(visit.visitAge == 1 ? kleur : kleur.opacity(transparant))
+        NavigationStack {
+            let (xWeekNummers, xAantallen) = xWaarden()
+            SliderHeaderView(model: model)
+            AppointmentsViewHeader(model: model)
+            let localPatients = extraVisits(patients: model.patientVisits)
+            Chart {
+                ForEach(localPatients, id: \.id) { patient in
+                    ForEach(patient.visits, id: \.id) { visit in
+                        BarMark(
+                            xStart: .value("Afspraak", visit.visitCreated),
+                            xEnd: .value("Consultatie", visit.visitDate),
+                            y: .value("Naam", doNaam(localPatient: patient))
+                        )
+                        .foregroundStyle(
+                            visit.visitAge == 1
+                                ? kleur : kleur.opacity(transparant)
+                        )
+                    }
                 }
+                RuleMark(x: .value("Nu", Date()))
+                    .foregroundStyle(.red)
             }
-            RuleMark(x: .value("Nu", Date()))
-                .foregroundStyle(.red)
-        }
-        .chartScrollableAxes(.vertical)
-        .chartYVisibleDomain(length: 25)
-        .chartXAxisLabel(alignment: .center) {
-            Text("Weken")
-                .font(.system(size: tekstGrootte))
-                .foregroundColor(kleur)
-        }
-        .chartYAxisLabel(position: .top) {
-            Text("Aantal")
-                .font(.system(size: tekstGrootte))
-                .foregroundColor(kleur)
-        }
-        .chartXAxis {
-            AxisMarks(position: .top, values: xWeekNummers) { value in
-                AxisGridLine()
-                AxisTick()
-                AxisValueLabel(
-                    centered: true,
-                    collisionResolution: .greedy
-                ) {
-                    if let temp = value.as(Date.self) {
-                        let counter = xAantallen[value.index] == 0 ? "" : String(xAantallen[value.index])
-                        Text("\(temp.formatted(.dateTime.week()))\n\(counter)")
+            .chartScrollableAxes(.vertical)
+            .chartYVisibleDomain(length: 25)
+            .chartXAxisLabel(alignment: .center) {
+                Text("Weken")
+                    .font(.system(size: tekstGrootte))
+                    .foregroundColor(kleur)
+            }
+            .chartYAxisLabel(position: .top) {
+                Text("Aantal")
+                    .font(.system(size: tekstGrootte))
+                    .foregroundColor(kleur)
+            }
+            .chartXAxis {
+                AxisMarks(position: .top, values: xWeekNummers) { value in
+                    AxisGridLine()
+                    AxisTick()
+                    AxisValueLabel(
+                        centered: true,
+                        collisionResolution: .greedy
+                    ) {
+                        if let temp = value.as(Date.self) {
+                            let counter =
+                                xAantallen[value.index] == 0
+                                ? "" : String(xAantallen[value.index])
+                            Text(
+                                "\(temp.formatted(.dateTime.week()))\n\(counter)"
+                            )
                             .font(.system(size: 12))
                             .foregroundColor(kleur)
+                        }
                     }
                 }
             }
-        }
-        .chartYAxis {
-            AxisMarks(preset: .extended, position: .leading, values: .automatic) { value in
-                AxisGridLine()
-                AxisTick()
-                AxisValueLabel(centered: true) {
-                    if let stringValue = value.as(String.self) {
-                        Text("\(stringValue)")
-                            .font(.system(size: tekstGrootte))
-                            .foregroundColor(kleur)
+            .chartYAxis {
+                AxisMarks(
+                    preset: .extended,
+                    position: .leading,
+                    values: .automatic
+                ) { value in
+                    AxisGridLine()
+                    AxisTick()
+                    AxisValueLabel(centered: true) {
+                        if let stringValue = value.as(String.self) {
+                            Text("\(stringValue)")
+                                .font(.system(size: tekstGrootte))
+                                .foregroundColor(kleur)
+                        }
                     }
                 }
             }
+            .padding()
+            .toolbar {
+                ToolbarItemGroup(placement: .bottomBar) {
+                    buildButton(type: "Alfabetisch")
+                    buildButton(type: "Duur")
+                    buildButton(type: "Aantal")
+                }
+            }
         }
-        .padding()
-        #if os(iOS)
-            .navigationBarTitle(title, displayMode: .inline)
-            .statusBar(hidden: true)
-        #endif
+    }
+
+    func buildButton(type: String) -> some View {
+        return Button(
+            action: { doButton(type: type) },
+            label: {
+                Label("\(type)", systemImage: "arrowtriangle.up")
+                    .labelStyle(.titleAndIcon)
+                    .fixedSize()
+            }
+        )
+        .buttonStyle(.plain)
+    }
+
+    func doButton(type: String) {
+        if sortType != type {
+            sortDirection = "up"
+            sortType = type
+        } else {
+            sortDirection = (sortDirection == "up") ? "down" : "up"
+        }
+        model.sortPatientLines(type: sortType, direction: sortDirection)
     }
 
     func extraVisits(patients: [PatientInfo]) -> [PatientInfo] {
@@ -92,7 +170,10 @@ struct AppointmentsView: View {
                         visitAge: 1,
                         visitCalendar: visit.visitCalendar,
                         visitCanceled: visit.visitCanceled,
-                        visitCreated: kalender.date(byAdding: DateComponents(day: -7), to: visit.visitDate)!,
+                        visitCreated: kalender.date(
+                            byAdding: DateComponents(day: -7),
+                            to: visit.visitDate
+                        )!,
                         visitDate: visit.visitDate,
                         visitFirst: visit.visitFirst,
                         visitNoShow: visit.visitNoShow,
@@ -122,10 +203,22 @@ struct AppointmentsView: View {
         var localDates = [Date]()
         var localCounters = [Int]()
         let consultaties = model.patientAllVisits.flatMap { $0.visits }
-        let startDatum = (consultaties.min(by: { $0.visitCreated < $1.visitCreated })?.visitCreated)!
-        let eindDatum = (consultaties.max(by: { $0.visitDate < $1.visitDate })?.visitDate)!
-        let eindDatumPlus = kalender.nextDate(after: eindDatum, matching: startMaandag, matchingPolicy: .nextTime, direction: .forward)!
-        kalender.enumerateDates(startingAfter: startDatum, matching: startMaandag, matchingPolicy: .nextTime) { datum, _, stop in
+        let startDatum =
+            (consultaties.min(by: { $0.visitCreated < $1.visitCreated })?
+            .visitCreated)!
+        let eindDatum =
+            (consultaties.max(by: { $0.visitDate < $1.visitDate })?.visitDate)!
+        let eindDatumPlus = kalender.nextDate(
+            after: eindDatum,
+            matching: startMaandag,
+            matchingPolicy: .nextTime,
+            direction: .forward
+        )!
+        kalender.enumerateDates(
+            startingAfter: startDatum,
+            matching: startMaandag,
+            matchingPolicy: .nextTime
+        ) { datum, _, stop in
             guard let datum = datum, datum < eindDatumPlus else {
                 stop = true
                 return
@@ -135,7 +228,10 @@ struct AppointmentsView: View {
 
         for localDate in localDates {
             let localDateWeek = kalender.component(.weekOfYear, from: localDate)
-            let localCounter = consultaties.filter { kalender.component(.weekOfYear, from: $0.visitCreated) == localDateWeek && $0.visitAge == 1 }.count
+            let localCounter = consultaties.filter {
+                kalender.component(.weekOfYear, from: $0.visitCreated)
+                    == localDateWeek && $0.visitAge == 1
+            }.count
             localCounters.append(localCounter)
         }
         return (localDates, localCounters)
@@ -153,7 +249,10 @@ struct AppointmentsViewHeader: View {
             Button(action: { doButton(type: "alfa") }) {
                 HStack {
                     if sortType == "alfa" {
-                        Text(sortDirection == "up" ? "Alfabetisch ⇑" : "Alfabetisch ⇓")
+                        Text(
+                            sortDirection == "up"
+                                ? "Alfabetisch ⇑" : "Alfabetisch ⇓"
+                        )
                     } else {
                         Text("Alfabetisch  ")
                     }
@@ -163,7 +262,11 @@ struct AppointmentsViewHeader: View {
             Button(action: { doButton(type: "datum") }) {
                 HStack {
                     if sortType == "datum" {
-                        Text(sortDirection == "up" ? "Laatste consultatie ⇑" : "Laatste consultatie ⇓")
+                        Text(
+                            sortDirection == "up"
+                                ? "Laatste consultatie ⇑"
+                                : "Laatste consultatie ⇓"
+                        )
                     } else {
                         Text("Laatste consultatie  ")
                     }
@@ -173,7 +276,11 @@ struct AppointmentsViewHeader: View {
             Button(action: { doButton(type: "aantal") }) {
                 HStack {
                     if sortType == "aantal" {
-                        Text(sortDirection == "up" ? "Aantal consultaties ⇑" : "Aantal consultaties ⇓")
+                        Text(
+                            sortDirection == "up"
+                                ? "Aantal consultaties ⇑"
+                                : "Aantal consultaties ⇓"
+                        )
                     } else {
                         Text("Aantal consultaties  ")
                     }

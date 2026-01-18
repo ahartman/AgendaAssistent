@@ -11,6 +11,8 @@
 		DCB88F6424D47D7700400853 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCB88F6324D47D7700400853 /* Preview Assets.xcassets */; };
 		DCB88F6F24D47ECE00400853 /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB88F6E24D47ECE00400853 /* MainModel.swift */; };
 		E80444812BFDF62D00DDA0BC /* ChartlinesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E80444802BFDF62D00DDA0BC /* ChartlinesView.swift */; };
+		E81814012F13B4D70041F0F8 /* GraphsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81814002F13B4D70041F0F8 /* GraphsView.swift */; };
+		E81814032F13C5E30041F0F8 /* TablesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81814022F13C5E30041F0F8 /* TablesView.swift */; };
 		E81D6DBA255454D8005CD6BA /* SetDatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81D6DB9255454D8005CD6BA /* SetDatesView.swift */; };
 		E82436AD2B2311AD00618B45 /* DiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82436AC2B2311AD00618B45 /* DiaryView.swift */; };
 		E82670C725AED1E300298BD0 /* MapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82670C625AED1E300298BD0 /* MapModel.swift */; };
@@ -51,6 +53,8 @@
 		DCB88F6824D47D7700400853 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DCB88F6E24D47ECE00400853 /* MainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModel.swift; sourceTree = "<group>"; };
 		E80444802BFDF62D00DDA0BC /* ChartlinesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartlinesView.swift; sourceTree = "<group>"; };
+		E81814002F13B4D70041F0F8 /* GraphsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphsView.swift; sourceTree = "<group>"; };
+		E81814022F13C5E30041F0F8 /* TablesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TablesView.swift; sourceTree = "<group>"; };
 		E81C4993257759D5002A67D9 /* Agenda Assistent.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Agenda Assistent.entitlements"; sourceTree = "<group>"; };
 		E81D6DB9255454D8005CD6BA /* SetDatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetDatesView.swift; sourceTree = "<group>"; };
 		E82436AC2B2311AD00618B45 /* DiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryView.swift; sourceTree = "<group>"; };
@@ -131,11 +135,13 @@
 				E80444802BFDF62D00DDA0BC /* ChartlinesView.swift */,
 				E8922FAD27B8F8BD00D83275 /* CommandsView.swift */,
 				E82436AC2B2311AD00618B45 /* DiaryView.swift */,
+				E81814002F13B4D70041F0F8 /* GraphsView.swift */,
 				E89BFB6A2B78BDA500CFBADC /* NoShowView.swift */,
 				E8A672272B36CA4C008A8897 /* PatientMapView.swift */,
 				E898FEF62B8F1ECA00B188D0 /* PatientTimelineView.swift */,
 				E81D6DB9255454D8005CD6BA /* SetDatesView.swift */,
 				E8800E5C2B34375E00EDC4AE /* SliderHeaderView.swift */,
+				E81814022F13C5E30041F0F8 /* TablesView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -256,10 +262,12 @@
 				E8B248B32AFFDAF2002BAFF6 /* DBModel.swift in Sources */,
 				E8ADF96A2A32FD1000D5E3A8 /* AppointmentsView.swift in Sources */,
 				E88103C22B46B91F004923DA /* EventModel.swift in Sources */,
+				E81814032F13C5E30041F0F8 /* TablesView.swift in Sources */,
 				DCB88F6F24D47ECE00400853 /* MainModel.swift in Sources */,
 				E8922FAE27B8F8BD00D83275 /* CommandsView.swift in Sources */,
 				E81D6DBA255454D8005CD6BA /* SetDatesView.swift in Sources */,
 				E8A672282B36CA4C008A8897 /* PatientMapView.swift in Sources */,
+				E81814012F13B4D70041F0F8 /* GraphsView.swift in Sources */,
 				E86A68422B2C5CAE00C48A63 /* ContactModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -444,7 +452,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4;
+				MARKETING_VERSION = 1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ahartman.AgendaAssistent;
 				PRODUCT_NAME = "Agenda Assistent";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -491,7 +499,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4;
+				MARKETING_VERSION = 1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ahartman.AgendaAssistent;
 				PRODUCT_NAME = "Agenda Assistent";
 				PROVISIONING_PROFILE_SPECIFIER = "";

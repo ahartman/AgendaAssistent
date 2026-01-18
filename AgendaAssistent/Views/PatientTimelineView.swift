@@ -1,5 +1,5 @@
 //
-//  PatientTimelineView1.swift
+//  PatientTimelineView.swift
 //  AgendaAssistent
 //
 //  Created by André Hartman on 28/02/2024.
@@ -19,7 +19,7 @@ struct PatientTimelineView: View {
     }()
 
     var body: some View {
-        PatientTimelineViewHeader1(model: model)
+        PatientTimelineViewHeader(model: model)
         Chart {
             ForEach(model.patientTimeline) { line in
                 BarMark(
@@ -61,7 +61,8 @@ struct PatientTimelineView: View {
             }
         }
         .chartYAxis {
-            AxisMarks(preset: .extended, position: .leading, values: .automatic) { value in
+            AxisMarks(preset: .extended, position: .leading, values: .automatic)
+            { value in
                 AxisGridLine()
                 AxisTick()
                 AxisValueLabel(centered: true) {
@@ -74,15 +75,15 @@ struct PatientTimelineView: View {
             }
         }
         .padding()
-#if os(iOS)
-            .navigationBarTitle(title, displayMode: .inline)
-#endif
     }
 
     func xWaarden() -> [Date] {
         var localDates = [Date]()
-        let startDatum = (model.patientTimeline.min(by: { $0.startDate < $1.startDate })?.startDate)!
-        let eindDatum = (model.patientTimeline.max(by: { $0.endDate < $1.endDate })?.endDate)!
+        let startDatum =
+            (model.patientTimeline.min(by: { $0.startDate < $1.startDate })?
+            .startDate)!
+        let eindDatum =
+            (model.patientTimeline.max(by: { $0.endDate < $1.endDate })?.endDate)!
 
         let dateYear = kalender.component(.year, from: startDatum)
         var tempDate = DateComponents(calendar: kalender, year: dateYear).date
@@ -95,7 +96,7 @@ struct PatientTimelineView: View {
     }
 }
 
-struct PatientTimelineViewHeader1: View {
+struct PatientTimelineViewHeader: View {
     @Bindable var model: MainModel
     @State var sortDirection = "down"
     @State var sortType = "alfa"
@@ -106,7 +107,10 @@ struct PatientTimelineViewHeader1: View {
             Button(action: { doButton(type: "alfa") }) {
                 HStack {
                     if sortType == "alfa" {
-                        Text(sortDirection == "up" ? "Alfabetisch ⇑" : "Alfabetisch ⇓")
+                        Text(
+                            sortDirection == "up"
+                                ? "Alfabetisch ⇑" : "Alfabetisch ⇓"
+                        )
                     } else {
                         Text("Alfabetisch  ")
                     }
@@ -116,7 +120,11 @@ struct PatientTimelineViewHeader1: View {
             Button(action: { doButton(type: "datum") }) {
                 HStack {
                     if sortType == "datum" {
-                        Text(sortDirection == "up" ? "Laatste consultatie ⇑" : "Laatste consultatie ⇓")
+                        Text(
+                            sortDirection == "up"
+                                ? "Laatste consultatie ⇑"
+                                : "Laatste consultatie ⇓"
+                        )
                     } else {
                         Text("Laatste consultatie  ")
                     }
