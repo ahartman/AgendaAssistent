@@ -6,18 +6,6 @@
 //
 import EventKit
 
-struct PeriodFloat: Codable {
-    var periodStart: CGFloat = 0.0
-    var periodLength: CGFloat = 0.0
-    var periodEnds = [CGFloat]()
-    var periodDates = PeriodStartEnd()
-
-    struct PeriodStartEnd: Codable {
-        var start = Date()
-        var end = Date()
-    }
-}
-
 @Observable class MainModel {
     var patientAllVisits = [PatientInfo]()
     var patientVisits = [PatientInfo]()
@@ -133,6 +121,7 @@ struct PeriodFloat: Codable {
         doPatientTimeline()
     }
 
+    // Updating database
     func dailyUpdate() {
         if !kalender.isDateInToday(
             defaults.object(forKey: "todayDaily") as! Date
@@ -218,7 +207,7 @@ struct PeriodFloat: Codable {
             }
         }
         events = Array(Set(foundEvents))
-        if events.count == 0 { print("Geen agenda's")}
+        if events.count == 0 { print("Geen agenda's") }
 
         for (index, _) in Array(events.enumerated()) {
             events[index].url = URL(
@@ -254,6 +243,7 @@ struct PeriodFloat: Codable {
         DBModel().updateDBWithPatients(patients: patientVisits)
     }
 
+    // events
     func doEventLines(events: [EKEvent]) -> [Event] {
         var localLines = [Event]()
         var localUpdates = [EKEvent]()
@@ -316,7 +306,8 @@ struct PeriodFloat: Codable {
             separatedBy: CharacterSet.alphanumerics.inverted
         ).joined(separator: " ")  // remove symbols
 
-        var temp = temp1
+        var temp =
+            temp1
             .replacingOccurrences(of: "(mut)", with: "")
             .replacingOccurrences(of: "mut", with: "")
             .replacingOccurrences(of: "#", with: "")
@@ -530,8 +521,8 @@ struct PeriodFloat: Codable {
         }
     }
 
-    // other
-    func sortPatientLines(type: String, direction: String) {
+    // PatientVisitsView
+    func sortPatientVisitsLines(type: String, direction: String) {
         switch type {
         case "alfa":
             if direction == "up" {
@@ -560,6 +551,7 @@ struct PeriodFloat: Codable {
         }
     }
 
+    // PatientMapView
     func doMapView() {
         let filteredLines = patientVisits.filter {
             if $0.patientLatitude != nil {
@@ -634,94 +626,95 @@ struct PeriodFloat: Codable {
         diaryData = localPatients
     }
 
-#if targetEnvironment(macCatalyst)
-    func writeCSV() {
-        var patients = [(naam: String, datum: Date)]()
-        for line in patientVisits {
-            patients.append((line.patientName, line.visits[0].visitDate))
-        }
-        patients = patients.sorted(by: { $0.datum < $1.datum })
-
-        var previousWeekday = kalender.component(
-            .weekday,
-            from: period.periodDates.start
-        )
-        df.dateFormat = "dd/MM/yy HH:mm"
-
-        var csvString =
-            "\("Datum");\("Naam");\("Payconic");\("Bank/mobiel");\("Cash");\("???")\n"
-        for patient in patients {
-            let weekday = kalender.component(.weekday, from: patient.datum)
-            if weekday != previousWeekday {
-                csvString = csvString.appending(";;;;;\n")
-                previousWeekday = weekday
+    // Export Weeksheet
+    #if targetEnvironment(macCatalyst)
+        func writeCSV() {
+            var patients = [(naam: String, datum: Date)]()
+            for line in patientVisits {
+                patients.append((line.patientName, line.visits[0].visitDate))
             }
-            csvString = csvString.appending(
-                "\(String(describing: df.string(from: patient.datum)));\(patient.naam);;;\n"
+            patients = patients.sorted(by: { $0.datum < $1.datum })
+
+            var previousWeekday = kalender.component(
+                .weekday,
+                from: period.periodDates.start
             )
-        }
-        /*
-                let fm = FileManager.default
-                do {
-                    let path = try fm.url(for: .documentDirectory, in: .allDomainsMask, appropriateFor: nil, create: false)
-                    let fileURL = path.appendingPathComponent("Weekformulier.csv")
-                    try csvString.write(to: fileURL, atomically: true, encoding: .utf8)
-                } catch {
-                    print("Probleem met Weekformulier")
+            df.dateFormat = "dd/MM/yy HH:mm"
+
+            var csvString =
+                "\("Datum");\("Naam");\("Payconic");\("Bank/mobiel");\("Cash");\("???")\n"
+            for patient in patients {
+                let weekday = kalender.component(.weekday, from: patient.datum)
+                if weekday != previousWeekday {
+                    csvString = csvString.appending(";;;;;\n")
+                    previousWeekday = weekday
                 }
-        */
+                csvString = csvString.appending(
+                    "\(String(describing: df.string(from: patient.datum)));\(patient.naam);;;\n"
+                )
+            }
+            /*
+                    let fm = FileManager.default
+                    do {
+                        let path = try fm.url(for: .documentDirectory, in: .allDomainsMask, appropriateFor: nil, create: false)
+                        let fileURL = path.appendingPathComponent("Weekformulier.csv")
+                        try csvString.write(to: fileURL, atomically: true, encoding: .utf8)
+                    } catch {
+                        print("Probleem met Weekformulier")
+                    }
+            */
 
-        doWeekformulier(csvString: csvString)
-    }
-
-    func doWeekformulier(csvString: String) {
-        var csvList = [[String]]()
-        for temp in csvString.components(separatedBy: "\n") {
-            csvList.append(temp.components(separatedBy: ";"))
+            doWeekformulier(csvString: csvString)
         }
-        csvList = csvList.dropLast()
 
-        let weekFormulierScript =
-            """
-            tell application "Microsoft Excel"
-            set theList to \(csvList)
-                activate
-                tell active workbook
-                    tell active sheet
-                        set theRange to range ("A1:F" & (count of theList))
-                        set font size of font object of theRange to 14
-                        set value of theRange to theList
-             
-                        set theRange to range ("C1:F1")
-                        set horizontal alignment of theRange to horizontal align center
+        func doWeekformulier(csvString: String) {
+            var csvList = [[String]]()
+            for temp in csvString.components(separatedBy: "\n") {
+                csvList.append(temp.components(separatedBy: ";"))
+            }
+            csvList = csvList.dropLast()
 
-                        set theRange to range ("C2:F" & (count of theList))
-                        set myBorders to {border top, border bottom, border left, border right}
-                        repeat with i from 1 to 4
-                            set theBorder to get border theRange which border (item i of myBorders)
-                            set weight of theBorder to border weight thin
-                        end repeat
+            let weekFormulierScript =
+                """
+                tell application "Microsoft Excel"
+                set theList to \(csvList)
+                    activate
+                    tell active workbook
+                        tell active sheet
+                            set theRange to range ("A1:F" & (count of theList))
+                            set font size of font object of theRange to 14
+                            set value of theRange to theList
+                 
+                            set theRange to range ("C1:F1")
+                            set horizontal alignment of theRange to horizontal align center
 
-                        autofit column "A:E"
+                            set theRange to range ("C2:F" & (count of theList))
+                            set myBorders to {border top, border bottom, border left, border right}
+                            repeat with i from 1 to 4
+                                set theBorder to get border theRange which border (item i of myBorders)
+                                set weight of theBorder to border weight thin
+                            end repeat
+
+                            autofit column "A:E"
+                        end tell
+
+                        --set naam to "/Users/gebruiker/Desktop/Weekformulier.xls"
+                        --tell application "System Events" to if (exists file naam) then delete file naam
+                        --save workbook as filename naam file format Excel98to2004 file format
                     end tell
-
-                    --set naam to "/Users/gebruiker/Desktop/Weekformulier.xls"
-                    --tell application "System Events" to if (exists file naam) then delete file naam
-                    --save workbook as filename naam file format Excel98to2004 file format
                 end tell
-            end tell
-            """
+                """
 
-        var error: NSDictionary?
-        if let scriptObject = NSAppleScript(source: weekFormulierScript) {
-            if let outputString = scriptObject.executeAndReturnError(&error)
-                .stringValue
-            {
-                print("outputString: \(outputString)")
-            } else if error != nil {
-                print("error: ", error!)
+            var error: NSDictionary?
+            if let scriptObject = NSAppleScript(source: weekFormulierScript) {
+                if let outputString = scriptObject.executeAndReturnError(&error)
+                    .stringValue
+                {
+                    print("outputString: \(outputString)")
+                } else if error != nil {
+                    print("error: ", error!)
+                }
             }
         }
-    }
-#endif // targetEnvironment(macCatalyst)
+    #endif  // targetEnvironment(macCatalyst)
 }

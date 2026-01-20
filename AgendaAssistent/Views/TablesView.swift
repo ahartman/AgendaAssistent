@@ -27,7 +27,7 @@ struct TablesView: View {
             .padding([.leading, .trailing], 20)
             Divider()
             if selected == 1 {
-                AppointmentsView(title: "Consultaties tijdslijn")
+                PatientVisitsView(title: "Consultaties tijdslijn")
                     .padding(20)
             } else if selected == 2 {
                 PatientTimelineView(title: "Patiënten tijdslijn")

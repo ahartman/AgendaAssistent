@@ -9,58 +9,29 @@
 import Charts
 import SwiftUI
 
-struct AppointmentsView: View {
-    @Environment(MainModel.self) private var model
+struct PatientVisitsView: View {
+    @Environment(MainModel.self) private var mainModel
     var title: String
 
-    @State var sortDirection = "up"
-    @State var sortType = "alfa"
-
-    struct ButtonImage {
-        var graph: String
-        var buttonIcon: Image
-        var brightness: Double
-
-        struct ButtonIcon {
-            var systemName: String
-            var brightness: Double
-        }
-    }
-    /*
-        @State var buttonImages : [ButtonImage] = [
-            ButtonImage(graph: "alfa", buttonIcon: ButtonImage.ButtonIcon(systemName: "", brightness: 1.0)),
-            ButtonImage(graph: "duur", buttonIcon: ButtonImage.ButtonIcon(systemName: "", brightness: 1.0)),
-            ButtonImage(graph: "aantal", buttonIcon: ButtonImage.ButtonIcon(systemName: "", brightness: 1.0))
-        ]
-    */
-    @State var buttonImages: [ButtonImage] = [
-        ButtonImage(
-            graph: "alfa",
-            buttonIcon: Image(systemName: "arrow.down"),
-            brightness: 0.2
-        ),
-        ButtonImage(
-            graph: "duur",
-            buttonIcon: Image(systemName: ""),
-            brightness: 0.5
-        ),
-        ButtonImage(
-            graph: "aantal",
-            buttonIcon: Image(systemName: ""),
-            brightness: 0.5
-        ),
+    @State var buttonIcon: String = "arrow.up"
+    @State var buttonType = [
+        "direction": "up",
+        "type": "alfa",
+        "icon": "arrow.up",
     ]
-
-    @State var ikoon = Image(systemName: "arrow.up")
+    @State var buttonVisible = [
+        "alfa": 1.0,
+        "datum": 0.0,
+        "aantal": 0.0,
+    ]
 
     var body: some View {
         NavigationStack {
             let (xWeekNummers, xAantallen) = xWaarden()
-            SliderHeaderView(model: model)
-            AppointmentsViewHeader(model: model)
-            let localPatients = extraVisits(patients: model.patientVisits)
+            SliderHeaderView(model: mainModel)
+            let localVisits = extraVisits(patients: mainModel.patientVisits)
             Chart {
-                ForEach(localPatients, id: \.id) { patient in
+                ForEach(localVisits, id: \.id) { patient in
                     ForEach(patient.visits, id: \.id) { visit in
                         BarMark(
                             xStart: .value("Afspraak", visit.visitCreated),
@@ -126,12 +97,12 @@ struct AppointmentsView: View {
                     }
                 }
             }
-            .padding()
+            .padding([.leading, .trailing], 40)
             .toolbar {
                 ToolbarItemGroup(placement: .bottomBar) {
-                    buildButton(type: "Alfabetisch")
-                    buildButton(type: "Duur")
-                    buildButton(type: "Aantal")
+                    buildButton(type: "alfa")
+                    buildButton(type: "datum")
+                    buildButton(type: "aantal")
                 }
             }
         }
@@ -141,22 +112,35 @@ struct AppointmentsView: View {
         return Button(
             action: { doButton(type: type) },
             label: {
-                Label("\(type)", systemImage: "arrowtriangle.up")
-                    .labelStyle(.titleAndIcon)
-                    .fixedSize()
+                HStack {
+                    Image(systemName: buttonType["icon"]!)
+                        .opacity(buttonVisible[type]!)
+                    Text("\(type)".capitalized)
+                }
+                .fixedSize()
             }
         )
-        .buttonStyle(.plain)
     }
 
     func doButton(type: String) {
-        if sortType != type {
-            sortDirection = "up"
-            sortType = type
+        buttonVisible["alfa"] = 0.0
+        buttonVisible["datum"] = 0.0
+        buttonVisible["aantal"] = 0.0
+        buttonVisible[type] = 1.0
+
+        if buttonType["type"] != type {
+            buttonType["direction"] = "up"
+            buttonType["type"] = type
+
         } else {
-            sortDirection = (sortDirection == "up") ? "down" : "up"
+            buttonType["direction"] = buttonType["direction"] == "up" ? "down" : "up"
+            buttonType["icon"] =
+                buttonType["direction"] == "up" ? "arrow.up" : "arrow.down"
         }
-        model.sortPatientLines(type: sortType, direction: sortDirection)
+        mainModel.sortPatientVisitsLines(
+            type: buttonType["type"]!,
+            direction: buttonType["direction"]!
+        )
     }
 
     func extraVisits(patients: [PatientInfo]) -> [PatientInfo] {
@@ -202,7 +186,7 @@ struct AppointmentsView: View {
     func xWaarden() -> ([Date], [Int]) {
         var localDates = [Date]()
         var localCounters = [Int]()
-        let consultaties = model.patientAllVisits.flatMap { $0.visits }
+        let consultaties = mainModel.patientAllVisits.flatMap { $0.visits }
         let startDatum =
             (consultaties.min(by: { $0.visitCreated < $1.visitCreated })?
             .visitCreated)!
@@ -235,69 +219,5 @@ struct AppointmentsView: View {
             localCounters.append(localCounter)
         }
         return (localDates, localCounters)
-    }
-}
-
-struct AppointmentsViewHeader: View {
-    @Bindable var model: MainModel
-    @State var sortDirection = "up"
-    @State var sortType = "alfa"
-
-    var body: some View {
-        HStack {
-            Spacer()
-            Button(action: { doButton(type: "alfa") }) {
-                HStack {
-                    if sortType == "alfa" {
-                        Text(
-                            sortDirection == "up"
-                                ? "Alfabetisch ⇑" : "Alfabetisch ⇓"
-                        )
-                    } else {
-                        Text("Alfabetisch  ")
-                    }
-                }
-            }
-            Spacer()
-            Button(action: { doButton(type: "datum") }) {
-                HStack {
-                    if sortType == "datum" {
-                        Text(
-                            sortDirection == "up"
-                                ? "Laatste consultatie ⇑"
-                                : "Laatste consultatie ⇓"
-                        )
-                    } else {
-                        Text("Laatste consultatie  ")
-                    }
-                }
-            }
-            Spacer()
-            Button(action: { doButton(type: "aantal") }) {
-                HStack {
-                    if sortType == "aantal" {
-                        Text(
-                            sortDirection == "up"
-                                ? "Aantal consultaties ⇑"
-                                : "Aantal consultaties ⇓"
-                        )
-                    } else {
-                        Text("Aantal consultaties  ")
-                    }
-                }
-            }
-            Spacer()
-        }
-        .foregroundStyle(kleur)
-    }
-
-    func doButton(type: String) {
-        if sortType != type {
-            sortDirection = "up"
-            sortType = type
-        } else {
-            sortDirection = (sortDirection == "up") ? "down" : "up"
-        }
-        model.sortPatientLines(type: sortType, direction: sortDirection)
     }
 }

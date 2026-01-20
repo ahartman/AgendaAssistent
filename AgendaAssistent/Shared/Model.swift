@@ -36,6 +36,18 @@ struct Period: Codable {
     }
 }
 
+struct PeriodFloat: Codable {
+    var periodStart: CGFloat = 0.0
+    var periodLength: CGFloat = 0.0
+    var periodEnds = [CGFloat]()
+    var periodDates = PeriodStartEnd()
+
+    struct PeriodStartEnd: Codable {
+        var start = Date()
+        var end = Date()
+    }
+}
+
 // PatientsTimeline
 struct PatientTimelineInfo: Decodable, FetchableRecord {
     var patient: PatientInfo.Patient

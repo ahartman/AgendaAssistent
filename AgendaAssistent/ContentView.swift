@@ -18,7 +18,7 @@ struct ContentView: View {
                 }
                 .defaultVisibility(.hidden, for: .sidebar)
                 Tab("Tijdslijn consultaties", systemImage: "") {
-                    AppointmentsView(title: "Consultaties tijdslijn")
+                    PatientVisitsView(title: "Consultaties tijdslijn")
                 }
                 .defaultVisibility(.hidden, for: .tabBar)
                 Tab("Tijdslijn patiënten", systemImage: "") {

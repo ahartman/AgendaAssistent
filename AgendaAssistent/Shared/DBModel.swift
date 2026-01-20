@@ -171,6 +171,7 @@ class DBModel {
                     .filter(["Marieke", "Marieke nieuwe"].contains(Column("visitCalendar")))
                     .order(Column("visitDate"))
                 return try PatientInfo.Patient
+                    .order(Column("patientName"))
                     .including(all: filteredVisits)
                     .having(filteredVisits.isEmpty == false)
                     .asRequest(of: PatientInfo.self)
