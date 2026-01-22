@@ -19,6 +19,7 @@ struct PatientTimelineView: View {
     }()
 
     var body: some View {
+        SliderHeaderView(model: model)
         PatientTimelineViewHeader(model: model)
         Chart {
             ForEach(model.patientTimeline) { line in

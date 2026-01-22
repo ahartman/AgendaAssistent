@@ -11,10 +11,11 @@ import SwiftUI
 struct TablesView: View {
     @State var selected = 1
     var body: some View {
-        VStack {
+        /*VStack {
+            Text("hallo")
             Divider()
             HStack {
-                Picker("What", selection: $selected) {
+                Picker("", selection: $selected) {
                     Text("Consultaties").tag(1)
                     Text("Patiënten").tag(2)
                     Text("Niet gekomen").tag(3)
@@ -40,6 +41,7 @@ struct TablesView: View {
                     .padding(20)
             }
         }
+         */
     }
 }
 #Preview {

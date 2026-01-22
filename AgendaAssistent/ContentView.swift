@@ -12,11 +12,13 @@ struct ContentView: View {
 
     var body: some View {
         TabView {
-            TabSection("Overzichten") {
-                Tab("Hallo", systemImage: "") {
+            TabSection("Tijdslijnen") {
+                /*
+                Tab("123", systemImage: "") {
                     TablesView()
                 }
                 .defaultVisibility(.hidden, for: .sidebar)
+                 */
                 Tab("Tijdslijn consultaties", systemImage: "") {
                     PatientVisitsView(title: "Consultaties tijdslijn")
                 }
@@ -65,3 +67,4 @@ struct ContentView: View {
         }
     }
 }
+

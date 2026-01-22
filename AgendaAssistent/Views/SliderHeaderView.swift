@@ -9,15 +9,14 @@
 import BetterSlider
 import SwiftUI
 
-@MainActor
 struct SliderHeaderView: View {
     @Bindable var model: MainModel
-    let screenWidth: CGFloat = UIScreen.main.bounds.width - 32.0
     let colors: [Color] = [kleur.opacity(transparant), kleur]
 
     var body: some View {
         let range = model.period.periodEnds[0]...model.period.periodEnds[1]
         VStack {
+            /*
             HStack {
                 Spacer()
                 Text("Van:")
@@ -27,25 +26,53 @@ struct SliderHeaderView: View {
                 Text(model.period.periodDates.end, style: .date)
                 Spacer()
             }
+             */
             HStack {
-                BetterSlider(value: $model.period.periodStart, in: range, step: 12.0)
-                    { Text("") } maximumValueLabel: { Text("") }
-                    .containerRelativeFrame(.horizontal, count: 12, span: 8, spacing: 1)
-                    .safeAreaInset(edge: .top) {
-                        Text(formatThumb(value: model.period.periodStart))
-                            .monthStyle(value: model.period.periodStart)
-                     }
-                    .onChange(of: model.period.periodStart, initial: false) { setPeriod() }
-                BetterSlider(value: $model.period.periodLength, in: 0.0...96.0, step: 12.0)
-                    { Text("") } maximumValueLabel: { Text("") }
-                   .containerRelativeFrame(.horizontal, count: 12, span: 4, spacing: 1)
-                    .safeAreaInset(edge: .top) {
-                        Text("\(Int(model.period.periodLength / 4)) maanden")
-                            .monthStyle(value: model.period.periodLength)
-                    }
-                    .onChange(of: model.period.periodLength, initial: false) { setPeriod() }
+                BetterSlider(
+                    value: $model.period.periodStart,
+                    in: range,
+                    step: 12.0
+                ) {
+                    Text("")
+                } maximumValueLabel: {
+                    Text("")
+                }
+                .containerRelativeFrame(
+                    .horizontal,
+                    count: 12,
+                    span: 8,
+                    spacing: 1
+                )
+                .safeAreaInset(edge: .top) {
+                    Text(formatThumb(value: model.period.periodStart))
+                        .monthStyle(value: model.period.periodStart)
+                }
+                .onChange(of: model.period.periodStart, initial: false) {
+                    setPeriod()
+                }
+                BetterSlider(
+                    value: $model.period.periodLength,
+                    in: 0.0...96.0,
+                    step: 12.0
+                ) {
+                    Text("")
+                } maximumValueLabel: {
+                    Text("")
+                }
+                .containerRelativeFrame(
+                    .horizontal,
+                    count: 12,
+                    span: 4,
+                    spacing: 1
+                )
+                .safeAreaInset(edge: .top) {
+                    Text("\(Int(model.period.periodLength / 4)) maanden")
+                        .monthStyle(value: model.period.periodLength)
+                }
+                .onChange(of: model.period.periodLength, initial: false) {
+                    setPeriod()
+                }
             }
-            .glassEffect()
             .showSliderStep()
             .sliderHandleSize(20)
             .sliderTrackHeight(3)
@@ -53,36 +80,34 @@ struct SliderHeaderView: View {
             .sliderTrackColor(kleur)
             .sliderHandleColor(.green)
             .tint(kleur)
-            .padding(.horizontal, 20)
-            /*
-            SliderView(value: $model.period1.periodStart.animation(.bouncy), range: range, stepCount: 35, colors: colors)
-                .onChange(of: model.period1.periodStart, initial: false) { setPeriod1() }
-             */
-
         }
+        .padding([.top], 80)
     }
 
     func formatThumb(value: Double) -> String {
         let labelFormat = Date.FormatStyle()
             .year(.twoDigits)
             .month(.abbreviated)
-        return kalender.date(byAdding: DateComponents(month: Int(value / 4)), to: Date())!.formatted(labelFormat)
+        let date = kalender.date(
+            byAdding: DateComponents(month: Int(value / 4)),
+            to: Date()
+        )!
+        return date.formatted(labelFormat).localizedCapitalized
     }
 
     func setPeriod() {
-        let tempStart = kalender.date(byAdding: DateComponents(day: Int(model.period.periodStart) * 7), to: model.zeroDate)!
+        let tempStart = kalender.date(
+            byAdding: DateComponents(day: Int(model.period.periodStart) * 7),
+            to: model.zeroDate
+        )!
         model.period.periodDates = Period.PeriodStartEnd(
             start: tempStart,
-            end: kalender.date(byAdding: DateComponents(day: Int(model.period.periodLength) * 7), to: tempStart)!
-        )
-        model.loadAndUpdate()
-    }
-
-    func setPeriod1() {
-        let tempStart = kalender.date(byAdding: DateComponents(day: Int(model.period1.periodStart) * 7), to: model.zeroDate)!
-        model.period1.periodDates = PeriodFloat.PeriodStartEnd(
-            start: tempStart,
-            end: kalender.date(byAdding: DateComponents(day: Int(model.period.periodLength) * 7), to: tempStart)!
+            end: kalender.date(
+                byAdding: DateComponents(
+                    day: Int(model.period.periodLength) * 7
+                ),
+                to: tempStart
+            )!
         )
         model.loadAndUpdate()
     }
@@ -92,7 +117,10 @@ struct MonthStyle: ViewModifier {
     let value: Double
     func body(content: Content) -> some View {
         content
-            .font(.system(size: 16, weight: .semibold, design: .rounded).monospacedDigit())
+            .font(
+                .system(size: 16, weight: .semibold, design: .rounded)
+                    .monospacedDigit()
+            )
             .padding(0)
             .contentTransition(.numericText(value: value))
             .animation(.default, value: value)

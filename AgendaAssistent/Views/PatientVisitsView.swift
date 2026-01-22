@@ -26,7 +26,7 @@ struct PatientVisitsView: View {
     ]
 
     var body: some View {
-        NavigationStack {
+        VStack {
             let (xWeekNummers, xAantallen) = xWaarden()
             SliderHeaderView(model: mainModel)
             let localVisits = extraVisits(patients: mainModel.patientVisits)
@@ -106,6 +106,7 @@ struct PatientVisitsView: View {
                 }
             }
         }
+        .ignoresSafeArea(.all)
     }
 
     func buildButton(type: String) -> some View {
@@ -133,7 +134,8 @@ struct PatientVisitsView: View {
             buttonType["type"] = type
 
         } else {
-            buttonType["direction"] = buttonType["direction"] == "up" ? "down" : "up"
+            buttonType["direction"] =
+                buttonType["direction"] == "up" ? "down" : "up"
             buttonType["icon"] =
                 buttonType["direction"] == "up" ? "arrow.up" : "arrow.down"
         }
@@ -220,4 +222,8 @@ struct PatientVisitsView: View {
         }
         return (localDates, localCounters)
     }
+}
+
+#Preview {
+    PatientVisitsView(title: "")
 }
