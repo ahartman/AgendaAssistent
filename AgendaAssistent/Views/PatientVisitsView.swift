@@ -13,136 +13,87 @@ struct PatientVisitsView: View {
     @Environment(MainModel.self) private var mainModel
     var title: String
 
-    @State var buttonIcon: String = "arrow.up"
-    @State var buttonType = [
-        "direction": "up",
-        "type": "alfa",
-        "icon": "arrow.up",
-    ]
-    @State var buttonVisible = [
-        "alfa": 1.0,
-        "datum": 0.0,
-        "aantal": 0.0,
-    ]
-
     var body: some View {
-        VStack {
-            let (xWeekNummers, xAantallen) = xWaarden()
-            SliderHeaderView(model: mainModel)
-            let localVisits = extraVisits(patients: mainModel.patientVisits)
-            Chart {
-                ForEach(localVisits, id: \.id) { patient in
-                    ForEach(patient.visits, id: \.id) { visit in
-                        BarMark(
-                            xStart: .value("Afspraak", visit.visitCreated),
-                            xEnd: .value("Consultatie", visit.visitDate),
-                            y: .value("Naam", doNaam(localPatient: patient))
-                        )
-                        .foregroundStyle(
-                            visit.visitAge == 1
+            VStack {
+                let (xWeekNummers, xAantallen) = xWaarden()
+                SliderHeaderView(model: mainModel)
+                NavigationStack {
+                let localVisits = extraVisits(patients: mainModel.patientVisits)
+                Chart {
+                    ForEach(localVisits, id: \.id) { patient in
+                        ForEach(patient.visits, id: \.id) { visit in
+                            BarMark(
+                                xStart: .value("Afspraak", visit.visitCreated),
+                                xEnd: .value("Consultatie", visit.visitDate),
+                                y: .value("Naam", doNaam(localPatient: patient))
+                            )
+                            .foregroundStyle(
+                                visit.visitAge == 1
                                 ? kleur : kleur.opacity(transparant)
-                        )
+                            )
+                        }
                     }
+                    RuleMark(x: .value("Nu", Date()))
+                        .foregroundStyle(.red)
                 }
-                RuleMark(x: .value("Nu", Date()))
-                    .foregroundStyle(.red)
-            }
-            .chartScrollableAxes(.vertical)
-            .chartYVisibleDomain(length: 25)
-            .chartXAxisLabel(alignment: .center) {
-                Text("Weken")
-                    .font(.system(size: tekstGrootte))
-                    .foregroundColor(kleur)
-            }
-            .chartYAxisLabel(position: .top) {
-                Text("Aantal")
-                    .font(.system(size: tekstGrootte))
-                    .foregroundColor(kleur)
-            }
-            .chartXAxis {
-                AxisMarks(position: .top, values: xWeekNummers) { value in
-                    AxisGridLine()
-                    AxisTick()
-                    AxisValueLabel(
-                        centered: true,
-                        collisionResolution: .greedy
-                    ) {
-                        if let temp = value.as(Date.self) {
-                            let counter =
+                .chartScrollableAxes(.vertical)
+                .chartYVisibleDomain(length: 25)
+                .chartXAxisLabel(alignment: .center) {
+                    Text("Weken")
+                        .font(.system(size: tekstGrootte))
+                        .foregroundColor(kleur)
+                }
+                .chartYAxisLabel(position: .top) {
+                    Text("Aantal")
+                        .font(.system(size: tekstGrootte))
+                        .foregroundColor(kleur)
+                }
+                .chartXAxis {
+                    AxisMarks(position: .top, values: xWeekNummers) { value in
+                        AxisGridLine()
+                        AxisTick()
+                        AxisValueLabel(
+                            centered: true,
+                            collisionResolution: .greedy
+                        ) {
+                            if let temp = value.as(Date.self) {
+                                let counter =
                                 xAantallen[value.index] == 0
                                 ? "" : String(xAantallen[value.index])
-                            Text(
-                                "\(temp.formatted(.dateTime.week()))\n\(counter)"
-                            )
-                            .font(.system(size: 12))
-                            .foregroundColor(kleur)
-                        }
-                    }
-                }
-            }
-            .chartYAxis {
-                AxisMarks(
-                    preset: .extended,
-                    position: .leading,
-                    values: .automatic
-                ) { value in
-                    AxisGridLine()
-                    AxisTick()
-                    AxisValueLabel(centered: true) {
-                        if let stringValue = value.as(String.self) {
-                            Text("\(stringValue)")
-                                .font(.system(size: tekstGrootte))
+                                Text(
+                                    "\(temp.formatted(.dateTime.week()))\n\(counter)"
+                                )
+                                .font(.system(size: 12))
                                 .foregroundColor(kleur)
+                            }
                         }
                     }
                 }
-            }
-            .padding([.leading, .trailing], 40)
-            .toolbar {
-                ToolbarItemGroup(placement: .bottomBar) {
-                    buildButton(type: "alfa")
-                    buildButton(type: "datum")
-                    buildButton(type: "aantal")
+                .chartYAxis {
+                    AxisMarks(
+                        preset: .extended,
+                        position: .leading,
+                        values: .automatic
+                    ) { value in
+                        AxisGridLine()
+                        AxisTick()
+                        AxisValueLabel(centered: true) {
+                            if let stringValue = value.as(String.self) {
+                                Text("\(stringValue)")
+                                    .font(.system(size: tekstGrootte))
+                                    .foregroundColor(kleur)
+                            }
+                        }
+                    }
+                }
+                .padding([.leading, .trailing], 40)
+                .toolbar(.hidden, for: .navigationBar)
+                .toolbar {
+                    PatientsViewToolbar(whichView: "visits")
                 }
             }
         }
-        .ignoresSafeArea(.all)
-    }
-
-    func buildButton(type: String) -> some View {
-        return Button(
-            action: { doButton(type: type) },
-            label: {
-                HStack {
-                    Image(systemName: buttonType["icon"]!)
-                        .opacity(buttonVisible[type]!)
-                    Text("\(type)".capitalized)
-                }
-                .fixedSize()
-            }
-        )
-    }
-
-    func doButton(type: String) {
-        buttonVisible["alfa"] = 0.0
-        buttonVisible["datum"] = 0.0
-        buttonVisible["aantal"] = 0.0
-        buttonVisible[type] = 1.0
-
-        if buttonType["type"] != type {
-            buttonType["direction"] = "up"
-            buttonType["type"] = type
-
-        } else {
-            buttonType["direction"] =
-                buttonType["direction"] == "up" ? "down" : "up"
-            buttonType["icon"] =
-                buttonType["direction"] == "up" ? "arrow.up" : "arrow.down"
-        }
-        mainModel.sortPatientVisitsLines(
-            type: buttonType["type"]!,
-            direction: buttonType["direction"]!
-        )
+        .ignoresSafeArea(edges: .top)
     }
 
     func extraVisits(patients: [PatientInfo]) -> [PatientInfo] {

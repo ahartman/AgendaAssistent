@@ -440,6 +440,7 @@ import EventKit
     }
 
     func sortPatientTimelines(type: String, direction: String) {
+        print("sortPatientTimelines")
         switch type {
         case "alfa":
             if direction == "up" {
@@ -488,7 +489,8 @@ import EventKit
                         patientName: patient.patientName,
                         visitCount: count,
                         noShowCount: noShow,
-                        percentage: percentage
+                        percentage: percentage,
+                        id: UUID()
                     )
                 )
             }
@@ -523,6 +525,7 @@ import EventKit
 
     // PatientVisitsView
     func sortPatientVisitsLines(type: String, direction: String) {
+        print("sortPatientVisitsLines")
         switch type {
         case "alfa":
             if direction == "up" {
@@ -611,7 +614,8 @@ import EventKit
                     DiaryLine(
                         diaryDate:
                             "\(weekdag.string(from: t.1)) (\(datum.string(from: t.1)))",
-                        diaryName: ""
+                        diaryName: "",
+                        id: UUID()
                     )
                 )
                 previousDate = t.1
@@ -619,7 +623,8 @@ import EventKit
             localPatients.append(
                 DiaryLine(
                     diaryDate: uur.string(from: t.1),
-                    diaryName: t.0
+                    diaryName: t.0,
+                    id: UUID()
                 )
             )
         }

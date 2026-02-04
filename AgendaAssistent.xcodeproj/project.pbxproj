@@ -31,6 +31,7 @@
 		E8ADF96A2A32FD1000D5E3A8 /* PatientVisitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8ADF9692A32FD1000D5E3A8 /* PatientVisitsView.swift */; };
 		E8B248B32AFFDAF2002BAFF6 /* DBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B248B22AFFDAF2002BAFF6 /* DBModel.swift */; };
 		E8DEECC52C8ED8A100D22C93 /* BetterSlider in Frameworks */ = {isa = PBXBuildFile; productRef = E8DEECC42C8ED8A100D22C93 /* BetterSlider */; };
+		E8E788262F234ED00046764E /* PatientsViewToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E788252F234ED00046764E /* PatientsViewToolbar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -73,6 +74,7 @@
 		E8A672272B36CA4C008A8897 /* PatientMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientMapView.swift; sourceTree = "<group>"; };
 		E8ADF9692A32FD1000D5E3A8 /* PatientVisitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientVisitsView.swift; sourceTree = "<group>"; };
 		E8B248B22AFFDAF2002BAFF6 /* DBModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBModel.swift; sourceTree = "<group>"; };
+		E8E788252F234ED00046764E /* PatientsViewToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientsViewToolbar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +141,7 @@
 				E8A672272B36CA4C008A8897 /* PatientMapView.swift */,
 				E898FEF62B8F1ECA00B188D0 /* PatientTimelineView.swift */,
 				E8ADF9692A32FD1000D5E3A8 /* PatientVisitsView.swift */,
+				E8E788252F234ED00046764E /* PatientsViewToolbar.swift */,
 				E81D6DB9255454D8005CD6BA /* SetDatesView.swift */,
 				E8800E5C2B34375E00EDC4AE /* SliderHeaderView.swift */,
 				E81814022F13C5E30041F0F8 /* TablesView.swift */,
@@ -263,6 +266,7 @@
 				E8ADF96A2A32FD1000D5E3A8 /* PatientVisitsView.swift in Sources */,
 				E88103C22B46B91F004923DA /* EventModel.swift in Sources */,
 				E81814032F13C5E30041F0F8 /* TablesView.swift in Sources */,
+				E8E788262F234ED00046764E /* PatientsViewToolbar.swift in Sources */,
 				DCB88F6F24D47ECE00400853 /* MainModel.swift in Sources */,
 				E8922FAE27B8F8BD00D83275 /* CommandsView.swift in Sources */,
 				E81D6DBA255454D8005CD6BA /* SetDatesView.swift in Sources */,

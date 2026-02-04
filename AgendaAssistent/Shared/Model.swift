@@ -107,7 +107,7 @@ struct AveragesChart {
         var yValue: Double
         var barPercent: String?
         var barColor: String?
-        let id = UUID()
+        var id: UUID
     }
 
     struct ChartToggles: Equatable {
@@ -133,7 +133,7 @@ struct PatientMap {
         var coordinate: CLLocationCoordinate2D
         var radius: CLLocationDistance
         var strokeColor: Color
-        let id = UUID()
+        var id: UUID = UUID()
     }
     struct Marker: Identifiable {
         let id:String = UUID().uuidString
@@ -159,13 +159,13 @@ struct NoShowLine: Identifiable {
     var visitCount: Int
     var noShowCount: Int
     var percentage: Double
-    let id = UUID()
+    var id: UUID
 }
 
 struct DiaryLine: Identifiable {
     var diaryDate: String
     var diaryName: String
-    var id = UUID()
+    var id: UUID
 }
 
 struct FlowLine: Identifiable {
@@ -177,7 +177,7 @@ struct FlowLine: Identifiable {
     var nieuwe = 0
     var voorstellen = 0
     var saldo = 0
-    var id = UUID()
+    var id: UUID
 }
 
 struct Event {
@@ -212,3 +212,4 @@ extension FloatingPoint {
         (self / value).rounded(roundingRule) * value
     }
 }
+

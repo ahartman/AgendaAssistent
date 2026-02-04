@@ -1,4 +1,3 @@
-
 //
 //  ChartLinesView.swift
 //  AgendaAssistent
@@ -22,7 +21,7 @@ struct ChartlinesView: View {
     ]
 
     var body: some View {
-        let (title, xAxisLabel) = getTexts()
+        let (_, xAxisLabel) = getTexts()
         SliderHeaderView(model: model)
         ChartlinesViewHeader(model: model, chartNumber: chartNumber)
         let localLines = highlightLines(lines: model.chartsData.chartData)
@@ -109,7 +108,8 @@ struct ChartlinesView: View {
                             type: $0.type,
                             yValue: $0.yValue,
                             barPercent: $0.barPercent,
-                            barColor: localTest
+                            barColor: localTest,
+                            id: UUID()
                         )
                     }
             )
@@ -134,23 +134,18 @@ struct ChartlinesView: View {
     }
 
     func getTexts() -> (String, String) {
-        var title = ""
         var xAxisLabel = ""
         switch chartNumber {
         case 1:
-            title = "Ouderdom patiënten"
             xAxisLabel = "Ouderdom (vanaf 1e consultatie) in maanden"
         case 2:
-            title = "Consultaties per patiënt"
             xAxisLabel = "Aantal consultaties per patiënt"
         case 3:
-            title = "Ouderdom consultaties"
             xAxisLabel = "Ouderdom sinds afspraak in weken"
         default:
-            title = "Onbekend"
             xAxisLabel = "Onbekend"
         }
-        return (title, xAxisLabel)
+        return ("", xAxisLabel)
     }
 }
 
@@ -182,3 +177,4 @@ struct ChartlinesViewHeader: View {
         }
     }
 }
+

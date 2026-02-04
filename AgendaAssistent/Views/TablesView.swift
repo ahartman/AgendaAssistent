@@ -9,10 +9,9 @@
 import SwiftUI
 
 struct TablesView: View {
-    @State var selected = 1
+    @State var selected = 0
     var body: some View {
-        /*VStack {
-            Text("hallo")
+        VStack {
             Divider()
             HStack {
                 Picker("", selection: $selected) {
@@ -24,7 +23,7 @@ struct TablesView: View {
                 .pickerStyle(.segmented)
                 .glassEffect()
             }
-            .padding([.top], 50)
+            //.padding([.top], 50)
             .padding([.leading, .trailing], 20)
             Divider()
             if selected == 1 {
@@ -39,9 +38,13 @@ struct TablesView: View {
             } else if selected == 4 {
                 DiaryView(title: "Agenda")
                     .padding(20)
+            } else if selected == 0 {
+                Spacer()
             }
         }
-         */
+        .toolbar {
+            PatientsViewToolbar(whichView: "")
+        }
     }
 }
 #Preview {

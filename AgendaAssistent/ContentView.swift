@@ -13,18 +13,17 @@ struct ContentView: View {
     var body: some View {
         TabView {
             TabSection("Tijdslijnen") {
-                /*
                 Tab("123", systemImage: "") {
                     TablesView()
                 }
                 .defaultVisibility(.hidden, for: .sidebar)
-                 */
-                Tab("Tijdslijn consultaties", systemImage: "") {
-                    PatientVisitsView(title: "Consultaties tijdslijn")
-                }
-                .defaultVisibility(.hidden, for: .tabBar)
+
                 Tab("Tijdslijn patiënten", systemImage: "") {
                     PatientTimelineView(title: "Patiënten tijdslijn")
+                }
+                .defaultVisibility(.hidden, for: .tabBar)
+                Tab("Tijdslijn consultaties", systemImage: "") {
+                    PatientVisitsView(title: "Consultaties tijdslijn")
                 }
                 .defaultVisibility(.hidden, for: .tabBar)
                 Tab("Niet gekomen", systemImage: "") {

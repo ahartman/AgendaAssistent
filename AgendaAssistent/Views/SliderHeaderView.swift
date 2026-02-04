@@ -16,17 +16,6 @@ struct SliderHeaderView: View {
     var body: some View {
         let range = model.period.periodEnds[0]...model.period.periodEnds[1]
         VStack {
-            /*
-            HStack {
-                Spacer()
-                Text("Van:")
-                Text(model.period.periodDates.start, style: .date)
-                Spacer()
-                Text("tot:")
-                Text(model.period.periodDates.end, style: .date)
-                Spacer()
-            }
-             */
             HStack {
                 BetterSlider(
                     value: $model.period.periodStart,
@@ -81,7 +70,7 @@ struct SliderHeaderView: View {
             .sliderHandleColor(.green)
             .tint(kleur)
         }
-        .padding([.top], 80)
+        //.padding([.top], 80)
     }
 
     func formatThumb(value: Double) -> String {

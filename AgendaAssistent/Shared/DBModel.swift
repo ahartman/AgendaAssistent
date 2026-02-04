@@ -19,7 +19,7 @@ class DBModel {
             let databaseURL = path.appendingPathComponent("agendaAssistent.sqlite")
             var dbQueue = try DatabaseQueue(path: databaseURL.path)
             print("db stored at \(databaseURL.path)")
-            var config = Configuration()
+            let config = Configuration()
 /*
              config.prepareDatabase { db in
                  db.trace { print($0) }
@@ -239,3 +239,4 @@ class DBModel {
         return patients
     }
 }
+
